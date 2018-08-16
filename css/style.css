@@ -10,7 +10,7 @@ body{
   justify-content: center;
   align-items: center;
 }
-
+/* gameboy container */
 .gameboy{
   border: 1px solid black;
   min-height: 90vh;
@@ -28,14 +28,13 @@ body{
   min-height: 54vh;
 }
 
-.top_half .screen{
+.top_half #screen{
   border: 1px solid black;
   min-width: 26vw;
   min-height: 45vh;
 }
 
 .gameboy .bottom_half{
-  /* border-top: 1px solid black; */
   min-width: inherit;
   min-height: 36vh;
   display: flex;
@@ -43,7 +42,7 @@ body{
   justify-content: space-evenly;
   align-items: center;
 }
-
+/* Directional Pad */
 .bottom_half .d_pad{
   min-height: 19vh;
   min-width: 10vw;
@@ -60,7 +59,7 @@ body{
   flex-direction: row;
 }
 
-.d_pad .left_button{
+.d_pad #left_button{
   border: 1px solid black;
   flex: 0.9;
 }
@@ -74,7 +73,7 @@ body{
   z-index: 1;
 }
 
-.d_pad .right_button{
+.d_pad #right_button{
   border: 1px solid black;
   flex: 0.9;
 }
@@ -91,18 +90,18 @@ body{
   flex-direction: column;
 }
 
-.d_pad .up_button{
+.d_pad #up_button{
   border: 1px solid black;
   flex: 0.9;
   margin-bottom: 0vh;
 }
 
-.d_pad .down_button{
+.d_pad #down_button{
   border: 1px solid black;
   flex: 0.9;
   margin-top: 0vh;
 }
-
+/* B and A Buttons */
 .bottom_half .buttons{
   position: relative;
   display: inline-block;
@@ -114,7 +113,7 @@ body{
   justify-content: space-evenly;
 }
 
-.buttons .b{
+.buttons #b{
   border: 1px solid black;
   margin: 2vh 1vw 2vh 1vw;
   flex: 1;
@@ -122,7 +121,7 @@ body{
   transform: translateY(2vh);
 }
 
-.buttons .a{
+.buttons #a{
   border: 1px solid black;
   margin: 2vh 1vw 2vh 1vw;
   flex: 1;
