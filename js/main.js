@@ -22,7 +22,7 @@ function displayTest(e){
     test.textContent = e.key
     return
   }
-  test.textContent = e.target.id
+  if(!e.key) test.textContent = e.target.id
 }
 
 
