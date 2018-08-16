@@ -32,6 +32,17 @@ body{
   border: 1px solid black;
   min-width: 26vw;
   min-height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#screen #test_display{
+  min-width: 20vw;
+  max-width: 20vw;
+  min-height: 10vh;
+  max-height: 10vh;
+  text-align: center;
 }
 
 .gameboy .bottom_half{
