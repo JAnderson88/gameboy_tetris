@@ -38,6 +38,7 @@
   --screen-info_display_top: 3vh;
   --screen-info_display_height: 5vh;
   --screen-info_display_font_size: 10px;
+  --screen-info_main_border: 23px solid black
 }
 
 body{
@@ -91,8 +92,8 @@ body{
 }
 
 #screen .main{
-  border-left: 8px solid black;
-  border-right: 8px solid black;
+  border-left: var(--screen-info_main_border);
+  border-right: var(--screen-info_main_border);
   flex: 2.5;
   display: flex;
   flex-direction: column;
@@ -102,7 +103,6 @@ body{
   border-bottom: 1px solid black;
   flex: 1;
   display: flex;
-  flex-direction: row;
 }
 
 .main .row .col{
