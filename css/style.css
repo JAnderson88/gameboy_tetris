@@ -31,6 +31,13 @@
   --gameboy-buttons_width: calc(var(--gameboy-width) - var(--gameboy-buttons_width_offset)); /* 30vw - 20vw = 10vw */
   --gameboy-b_button_offsetY : 2vh;
   --gameboy-a_button_offsetY : -2vh;
+  --screen-sides_margin: 5px solid hsl(55, 86%, 83%);
+  --screen-background_color: #db6300;
+  --screen-next_block_top: 6vh;
+  --screen-next_block_height: 10vh;
+  --screen-info_display_top: 3vh;
+  --screen-info_display_height: 5vh;
+  --screen-info_display_font_size: 10px;
 }
 
 body{
@@ -69,17 +76,66 @@ body{
   min-width: var(--gameboy-screen_width);
   min-height: var(--gameboy-screen_height);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* This is for test_display */
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-direction: row;
+  align-items: stretch;
 }
 
-#screen #test_display{
+#screen .left_margin{
+  border-left: var(--screen-sides_margin);
+  border-right: var(--screen-sides_margin);
+  background-color: var(--screen-background_color);
+  flex: 0.3;
+}
+
+#screen .main{
+  border-left: 8px solid black;
+  border-right: 8px solid black;
+  flex: 2.5;
+}
+
+#screen .right_margin{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--screen-background_color);
+  border-left: var(--screen-sides_margin);
+  border-right: var(--screen-sides_margin);
+}
+
+.right_margin .next_block{
+  margin-top: var(--screen-info_display_top);
+  border: 1px solid black;
+  min-height: var(--screen-next_block_height);
+  z-index: 3;
+  background-color: hsl(55, 86%, 83%);
+}
+
+.right_margin .disp{
+  margin-top:  var(--screen-info_display_top);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  min-height: var(--screen-info_display_height);
+  max-height: var(--screen-info_display_height);
+  z-index: 3;
+  font-size: var(--screen-info_display_font_size);
+}
+
+.disp p:first-child{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* #screen #test_display{
   min-width: 20vw;
   max-width: 20vw;
   min-height: 10vh;
   max-height: 10vh;
   text-align: center;
-}
+} */
 
 .gameboy .bottom_half{
   min-width: inherit;
@@ -98,7 +154,6 @@ body{
 .d_pad .row{
   position: relative;
   margin: 0vh auto 0vh auto;
-  min-height: 4vh;
   min-height: var(--gameboy-d_pad_row_height);
   max-width: var(--gameboy-d_pad_row_width);
   top: var(--gameboy-d_pad_row_top);

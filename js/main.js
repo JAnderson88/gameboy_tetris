@@ -27,6 +27,7 @@ function displayTest(e){
 
 
 
+
 //addEventlisteners and call functions
 up.addEventListener("click", displayTest)
 down.addEventListener("click", displayTest)
