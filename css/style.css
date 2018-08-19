@@ -100,13 +100,13 @@ body{
 }
 
 .main .row{
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   flex: 1;
   display: flex;
 }
 
 .main .row .col{
-  border-right: 1px solid black;
+  /* border-right: 1px solid black; */
   flex: 1;
 }
 
