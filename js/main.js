@@ -53,22 +53,38 @@ function createPiece(type) {
       renderBoard();
     }
   }
+  if(type === "I-block"){
+    let open = false;
+    for(let i=0; i<4; i++){
+      open = checkAvailability(i+3, 1);
+      if(open === true) break;
+    }
+    console.log(`Availabity check: ${open}`)
+    if(!open){
+      for(let i=0; i<4; i++){
+        const block = updateBoard(i+3, 1, 1);
+        gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
+      }
+      renderBoard();
+    }
+  }
 }
 //moveBlock function tracks when an input is passed in and moves the piece accordingly 
 function moveBlock(direction) {
+  const temp = []
   //loop over the moveableBlock array to move each block based on direction
   gameBoard.moveableBlock.forEach(function (block) {
     if (direction === "down") {
       if (checkAvailability(block.x, block.y + 1)) {
         //If space below is occupied remove from the moveableBlock array and go to the next
-        gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
+        // gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
         return createPiece("block");
       }
       if (!checkAvailability(block.x, block.y + 1)) {
         //If there is a space below, remove the old position and add the new position using updateBoard
         updateBoard(block.x, block.y, 0);
         gameBoard.inUse.splice(block.index, 1);
-        gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
+        // gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
         updateBoard(block.x, block.y + 1, 1);
         //If the block is at the end create a new piece
         if (block.y === 19) {
@@ -77,7 +93,7 @@ function moveBlock(direction) {
         //if it isn't at the end of the screen increase by one and add to the new position to the moveableBlock array
         if (block.y < 19) {
           block.y = block.y + 1;
-          gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
+          temp.push({ x: block.x, y: block.y, index: block.index });
         }
       }
     }
@@ -87,10 +103,10 @@ function moveBlock(direction) {
         if (!checkAvailability(block.x + 1, block.y)) {
           updateBoard(block.x, block.y, 0);
           gameBoard.inUse.splice(block.index, 1);
-          gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
+          // gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
           updateBoard(block.x + 1, block.y, 1);
           block.x++;
-          gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
+          temp.push({ x: block.x, y: block.y, index: block.index });
         }
       }
     }
@@ -100,14 +116,15 @@ function moveBlock(direction) {
         if (!checkAvailability(block.x - 1, block.y)) {
           updateBoard(block.x, block.y, 0);
           gameBoard.inUse.splice(block.index, 1);
-          gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
+          // gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
           updateBoard(block.x - 1, block.y, 1);
           block.x--;
-          gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
+          temp.push({ x: block.x, y: block.y, index: block.index });
         }
       }
     }
   });
+  gameBoard.moveableBlock = [].concat(temp);
 }
 
 //Checks if a space is available
@@ -168,10 +185,10 @@ function keyboardControl(e) {
 
 //where the game starts
 function gameStart() {
-  createPiece("block")
+  createPiece("I-block")
   const render = setInterval(function () {
-    moveBlock("down");
-    renderBoard();
+    // moveBlock("down");
+    // renderBoard();
   }, 1200)
 
 }
