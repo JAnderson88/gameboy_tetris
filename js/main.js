@@ -386,10 +386,10 @@ function renderBoard() {
 
 //where the game starts
 function gameStart() {
-  createPiece("I-block")
+  createPiece("down")
   const render = setInterval(function () {
-    // moveBlock("down");
-    // renderBoard();
+    moveBlock("down");
+    renderBoard();
   }, 1200)
 
 }
