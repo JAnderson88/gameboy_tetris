@@ -8,10 +8,6 @@ const a = document.getElementById("a");
 const screen = document.getElementById("screen");
 const test = document.getElementById("test_display");
 
-//helps set which color should be used for the newly created block. Will be updated later on
-let colorIndex = 0;
-//Array that holds the colors for the newly created blocks
-const color = ["cyan", "blue", "magenta", "gray", "green", "yellow", "red"];
 //This is the game board that holds all the information that needed to be updated to be rendered.
 const gameBoard = {
   //Each row holds an array that switches its elements values between 1 and 0 so the game knows what needs to be rendered and what doesn't
@@ -35,12 +31,17 @@ const gameBoard = {
   row18: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   row19: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   row20: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //The is a short hand itterable to streamline what needs to rendered instead of having to search through every row for "1"'s to help with optimization. This also holds the color it should be rendered as
-  inUse: [],
   //This array holds all the blocks that are playable and as the input is taken they will be moved
   moveableBlock: {}
 }
-
+/*This object contains the context of each piece. Inside you will have the following: 
+  --Block type
+  --Orientation
+  --Width of coresponding orientation
+  --Height of coresponding orientation
+  --An array to understand which positions to draw
+  --A check object that contains which positions to check depending on the which direction you want to move
+*/
 const piece = {
   block: {
     default: {
@@ -261,19 +262,24 @@ const piece = {
 }
 
 //define functions
-//This function creates a new Piece. Currently in the version just a block
+//This function creates a new Piece. Currently in this version, its just a block
 function createPiece(type, startX = 5, startY = 1) {
   if (type === "block") {
+    //check to see if space is available
     if (checkAvailability(startX, startY)) {
+      //create the blueprint of the piece
       const piece = {
         type: "block",
         orientation: "default",
         baseline: { x: startX, y: startY },
-        color: color[colorIndex],
+        color: "cyan",
         index: []
       };
+      //set it as the game board's moveable block
       gameBoard.moveableBlock = Object.assign({}, piece);
+      //update the game board
       updateBoard(1);
+      //then render it
       renderBoard();
     }
   }
@@ -286,43 +292,62 @@ function createPiece(type, startX = 5, startY = 1) {
   if (type === "l_right") { }
 }
 //moveBlock function tracks when an input is passed in and moves the piece accordingly 
-function moveBlock(direction) {
+function movePiece(direction) {
+  //grab the width of the current moveable block
   const width = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width;
   // const height = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height;
+  //grab the array that holds the spaces that needs to be checked if they are going 
   const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check[direction]
+  //variable to hold if the piece is able to be moved or not
   let passable;
   for (let i = 0; i < availables.length; i++) {
-    passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y)
-    if (!passable) break
+    //Loop over the availabes array to see if you have the see somewhere that is blocked. If it is, break from the loop passing a false value in for passable
+    passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y);
+    if (!passable) break;
   }
   if (direction === "down") {
+    //If it can't pass then create a new moveable piece and start from the top
     if (!passable) {
-      updateBoard(1)
+      updateBoard(1);
       return createPiece("block");
     }
+    //but if it is passable
     if (gameBoard.moveableBlock.baseline.y < 20) {
+      //If you haven't reached the bottom... then update the game board by turning the current places of the moveable block to 0
       updateBoard(0);
+      //Set the new baseline point
       gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x, y: gameBoard.moveableBlock.baseline.y + 1 }
+      //Then from the new baseline point, update the game board again by turning the new positions to 1
       updateBoard(1);
+      //Then render the board
       renderBoard();
       if (gameBoard.moveableBlock.baseline.y === 20) {
-        return createPiece("block")
+        //Check again if you reached the bottom of the screen. If you have create a new moveable piece.
+        return createPiece("block");
       }
     }
   }
+  //If i'm trying to move right...
   if (direction === "right") {
-    if(gameBoard.moveableBlock.baseline.x + width > 10) return
-    if(!passable) return
+    //If I can't move right anymore then don't do anything
+    if(gameBoard.moveableBlock.baseline.x + width > 10) return;
+    //If it's blocked...don't do anything
+    if(!passable) return;
+    //If I can move then update the board, set the new baseline, update the board again then render
     updateBoard(0);
-    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x+1, y: gameBoard.moveableBlock.baseline.y}
+    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x+1, y: gameBoard.moveableBlock.baseline.y};
     updateBoard(1);
     renderBoard();
    }
+   //If i'm trying to move left...
   if (direction === "left") {
-    if(gameBoard.moveableBlock.baseline.x === 1) return
-    if(!passable) return
+    //If i'm at the far left...don't do anything
+    if(gameBoard.moveableBlock.baseline.x === 1) return;
+    //If it's blocked...don't do anything
+    if(!passable) return;
+        //If I can move then update the board, set the new baseline, update the board again then render
     updateBoard(0);
-    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x-1, y: gameBoard.moveableBlock.baseline.y}
+    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x-1, y: gameBoard.moveableBlock.baseline.y};
     updateBoard(1);
     renderBoard();
    }
@@ -342,21 +367,16 @@ function updateBoard(fill) {
   })
 }
 
-//cleans the board
-function clearBoard() {
-  for (let i = 1; i <= 20; i++) {
-    for (let j = 0; j < 10; j++) {
-      document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = "white";
-      document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid white";
-    }
-  }
-}
+
 //renders the board
 function renderBoard() {
-  clearBoard();
   for (let i = 1; i <= 20; i++) {
     for (let j = 0; j < 10; j++) {
+      //clear drawing
+      document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = "white";
+      document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid white";
       if (gameBoard[`row${i}`][j]) {
+        //re-renders
         document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = gameBoard.moveableBlock.color;
         document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid black";
       }
@@ -364,29 +384,11 @@ function renderBoard() {
   }
 }
 
-//function used to allow functionality to keyboard
-function keyboardControl(e) {
-  if (e.key === "ArrowDown") {
-    moveBlock("down");
-    // renderBoard();
-  }
-  if (e.key === "ArrowLeft") {
-    moveBlock("left");
-    // renderBoard();
-  }
-  if (e.key === "ArrowRight") {
-    moveBlock("right");
-    // renderBoard();
-  }
-  if (e.key === "a") {}
-  if (e.key === "z") {}
-}
-
 //where the game starts
 function gameStart() {
   createPiece("block")
   const render = setInterval(function () {
-    moveBlock("down");
+    movePiece("down");
     renderBoard();
   }, 1200)
 
@@ -395,21 +397,35 @@ function gameStart() {
 //addEventlisteners and call functions
 //eventlisteners for the buttons created to emulate gameboard
 down.addEventListener("click", e => {
-  moveBlock("down");
+  movepiece("down");
   renderBoard();
 })
 left.addEventListener("click", e => {
-  moveBlock("left");
+  movePiece("left");
   renderBoard();
 })
 right.addEventListener("click", e => {
-  moveBlock("right");
+  movePiece("right");
   renderBoard();
 })
 // a.addEventListener("click", displayTest)
 // b.addEventListener("click", displayTest)
 
-document.addEventListener("keydown", keyboardControl)
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown") {
+    movePiece("down");
+  }
+  if (e.key === "ArrowLeft") {
+    movePiece("left");
+  }
+  if (e.key === "ArrowRight") {
+    movePiece("right");
+  }
+  if (e.key === "a") {}
+  if (e.key === "z") {}
+  renderBoard();
+})
+//Start the game
 gameStart();
 
 
