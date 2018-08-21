@@ -38,132 +38,348 @@ const gameBoard = {
   //The is a short hand itterable to streamline what needs to rendered instead of having to search through every row for "1"'s to help with optimization. This also holds the color it should be rendered as
   inUse: [],
   //This array holds all the blocks that are playable and as the input is taken they will be moved
-  moveableBlock: []
+  moveableBlock: {}
+}
+
+const piece = {
+  block: {
+    default: {
+      width: 1,
+      height: 1,
+      draw: [{ x: 0, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }],
+        right: [{ x: 1, y: 0 }],
+        left: [{ x: -1, y: 0 }],
+      }
+    }
+  },
+  sq_block: {
+    default: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+        right: [],
+        left: []
+      }
+    }
+  },
+  i_block: {
+    long: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }],
+        right: [],
+        left: [],
+      }
+    },
+    tall: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -3 }],
+      check: {
+        down: [{ x: 0, y: 1 }],
+        right: [],
+        left: [],
+      }
+    }
+  },
+  t_block: {
+    north: {
+      height: {},
+      width: {},
+      draw: [{ x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    east: {
+      height: {},
+      width: {},
+      draw: [{ x: 1, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 1, y: 0 }, { x: 0, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    south: {
+      height: {},
+      width: {},
+      draw: [{ x: 1, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
+      check: {
+        down: [{ x: 1, y: 1 }, { x: 2, y: 0 }, { x: 0, y: 0 }],
+        right: [],
+        left: [],
+      }
+    },
+    west: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+  },
+  s_left: {
+    east: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 0 }],
+        right: [],
+        left: [],
+      }
+    },
+    north: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: -1 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+        right: [],
+        left: [],
+      }
+    }
+  },
+  s_right: {
+    west: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    south: {
+      height: {},
+      width: {},
+      draw: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+        right: [],
+        left: [],
+      }
+    }
+  },
+  l_left: {
+    north: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    east: {
+      height: {},
+      width: {},
+      draw: [{ x: 1, y: -2 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 1, y: -1 }, { x: 0, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    south: {
+      height: {},
+      width: {},
+      draw: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
+      check: {
+        down: [{ x: 2, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
+        right: [],
+        left: [],
+      }
+    },
+    west: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+  },
+  l_right: {
+    north: {
+      height: {},
+      width: {},
+      draw: [{ x: 2, y: -1 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 2, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    east: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+    south: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+        right: [],
+        left: [],
+      }
+    },
+    west: {
+      height: {},
+      width: {},
+      draw: [{ x: 0, y: -2 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: -1 }, { x: 1, y: 1 }],
+        right: [],
+        left: [],
+      }
+    },
+  },
 }
 
 //define functions
 //This function creates a new Piece. Currently in the version just a block
-function createPiece(type) {
+function createPiece(type, startX = 5, startY = 1) {
   if (type === "block") {
-    if (!checkAvailability(5, 1)) {
-      //if the space provided is empty, put the newly created block (using the updateBoard function) at the current location
-      const block = updateBoard(5, 1, 1);
-      //add an object that tracks the newly created piece to the moveableBlock array
-      gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
+    if (checkAvailability(startX, startY)) {
+      const piece = {
+        type: "block",
+        orientation: "default",
+        baseline: { x: startX, y: startY },
+        color: color[colorIndex],
+        index: []
+      };
+      gameBoard.moveableBlock = Object.assign({}, piece);
+      updateBoard(1);
       renderBoard();
     }
   }
+  if (type === "sq_block") { }
+  if (type === "i_block") { }
+  if (type === "t_block") { }
+  if (type === "s_left") { }
+  if (type === "s_right") { }
+  if (type === "l_left") { }
+  if (type === "l_right") { }
 }
 //moveBlock function tracks when an input is passed in and moves the piece accordingly 
 function moveBlock(direction) {
-  //loop over the moveableBlock array to move each block based on direction
-  gameBoard.moveableBlock.forEach(function (block) {
-    if (direction === "down") {
-      if (checkAvailability(block.x, block.y + 1)) {
-        //If space below is occupied remove from the moveableBlock array and go to the next
-        gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
-        return createPiece("block");
-      }
-      if (!checkAvailability(block.x, block.y + 1)) {
-        //If there is a space below, remove the old position and add the new position using updateBoard
-        updateBoard(block.x, block.y, 0);
-        gameBoard.inUse.splice(block.index, 1);
-        gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
-        updateBoard(block.x, block.y + 1, 1);
-        //If the block is at the end create a new piece
-        if (block.y === 19) {
-          return createPiece("block");
-        }
-        //if it isn't at the end of the screen increase by one and add to the new position to the moveableBlock array
-        if (block.y < 19) {
-          block.y = block.y + 1;
-          gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
-        }
+  const width = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width;
+  // const height = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height;
+  const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check[direction]
+  let passable;
+  for (let i = 0; i < availables.length; i++) {
+    passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y)
+    if (!passable) break
+  }
+  if (direction === "down") {
+    if (!passable) {
+      updateBoard(1)
+      return createPiece("block");
+    }
+    if (gameBoard.moveableBlock.baseline.y < 20) {
+      updateBoard(0);
+      gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x, y: gameBoard.moveableBlock.baseline.y + 1 }
+      updateBoard(1);
+      renderBoard();
+      if (gameBoard.moveableBlock.baseline.y === 20) {
+        return createPiece("block")
       }
     }
-    //When you press the right button (or the right arrow key) move the block to the right
-    if (direction === "right") {
-      if (block.x < 10) {
-        if (!checkAvailability(block.x + 1, block.y)) {
-          updateBoard(block.x, block.y, 0);
-          gameBoard.inUse.splice(block.index, 1);
-          gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
-          updateBoard(block.x + 1, block.y, 1);
-          block.x++;
-          gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
-        }
-      }
-    }
-    //When you press the left button (or the left arrow key) move the block to the left
-    if (direction === "left") {
-      if (block.x > 1) {
-        if (!checkAvailability(block.x - 1, block.y)) {
-          updateBoard(block.x, block.y, 0);
-          gameBoard.inUse.splice(block.index, 1);
-          gameBoard.moveableBlock.splice(gameBoard.moveableBlock.indexOf(block), 1);
-          updateBoard(block.x - 1, block.y, 1);
-          block.x--;
-          gameBoard.moveableBlock.push({ x: block.x, y: block.y, index: block.index });
-        }
-      }
-    }
-  });
+  }
+  if (direction === "right") {
+    if(gameBoard.moveableBlock.baseline.x + width > 10) return
+    if(!passable) return
+    updateBoard(0);
+    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x+1, y: gameBoard.moveableBlock.baseline.y}
+    updateBoard(1);
+    renderBoard();
+   }
+  if (direction === "left") {
+    if(gameBoard.moveableBlock.baseline.x === 1) return
+    if(!passable) return
+    updateBoard(0);
+    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x-1, y: gameBoard.moveableBlock.baseline.y}
+    updateBoard(1);
+    renderBoard();
+   }
 }
 
 //Checks if a space is available
 function checkAvailability(x, y) {
-  return (gameBoard[`row${y}`][x - 1] === 1) ? true : false;
+  return (gameBoard[`row${y}`][x - 1] === 1) ? false : true;
 }
+
 //updates block to new position
-function updateBoard(x, y, fill) {
-  gameBoard[`row${y}`][x - 1] = fill;
-  if (fill) {
-    const blockObject = { x, y, color: color[colorIndex] };
-    gameBoard.inUse.push(blockObject);
-    gameBoard.inUse[gameBoard.inUse.length - 1].index = gameBoard.inUse.length - 1;
-    return blockObject
-  }
+function updateBoard(fill) {
+  const bx = gameBoard.moveableBlock.baseline.x
+  const by = gameBoard.moveableBlock.baseline.y
+  piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].draw.forEach(block => {
+    gameBoard[`row${by + block.y}`][bx + block.x - 1] = fill
+  })
 }
+
 //cleans the board
 function clearBoard() {
   for (let i = 1; i <= 20; i++) {
-    for (let j = 0; j < 10; j++){
+    for (let j = 0; j < 10; j++) {
       document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = "white";
       document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid white";
     }
   }
 }
-//re renders the board
+//renders the board
 function renderBoard() {
   clearBoard();
-  gameBoard.inUse.forEach(function (piece) {
-    document.querySelector(`#row${piece.y}`).querySelectorAll(".col")[piece.x - 1].style.backgroundColor = piece.color
-    document.querySelector(`#row${piece.y}`).querySelectorAll(".col")[piece.x - 1].style.border = "1px solid black";
-  })
+  for (let i = 1; i <= 20; i++) {
+    for (let j = 0; j < 10; j++) {
+      if (gameBoard[`row${i}`][j]) {
+        document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = gameBoard.moveableBlock.color;
+        document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid black";
+      }
+    }
+  }
 }
 
 //function used to allow functionality to keyboard
 function keyboardControl(e) {
   if (e.key === "ArrowDown") {
     moveBlock("down");
-    renderBoard();
+    // renderBoard();
   }
   if (e.key === "ArrowLeft") {
     moveBlock("left");
-    renderBoard();
+    // renderBoard();
   }
   if (e.key === "ArrowRight") {
     moveBlock("right");
-    renderBoard();
-  }
-  if (e.key === "a") {
-    // moveBlock("right");
     // renderBoard();
   }
-  if (e.key === "z") {
-    // moveBlock("right");
-    // renderBoard();
-  }
+  if (e.key === "a") {}
+  if (e.key === "z") {}
 }
 
 //where the game starts
