@@ -59,18 +59,14 @@ const piece = {
 
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
-function createPiece(type, startX = 5, startY = 1) {
+function createPiece(type, orientation) {
   if (type === "block") {
+    const startX = 5;
+    const startY = 1;
     //check to see if space is available
     if (checkAvailability(startX, startY)) {
       //create the blueprint of the piece
-      const piece = {
-        type: "block",
-        orientation: "default",
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-        index: []
-      };
+      const piece = { type, orientation, baseline: { x: startX, y: startY }, color: "cyan"};
       //set it as the game board's moveable block
       gameBoard.moveableBlock = Object.assign({}, piece);
       //update the game board
@@ -98,7 +94,7 @@ function movePiece(direction) {
     //If it can't pass then create a new moveable piece and start from the top
     if (!passable) {
       updateBoard(1);
-      return createPiece("block");
+      return createPiece("block", "default");
     }
     //but if it is passable
     if (gameBoard.moveableBlock.baseline.y < 20) {
@@ -112,7 +108,7 @@ function movePiece(direction) {
       renderBoard();
       if (gameBoard.moveableBlock.baseline.y === 20) {
         //Check again if you reached the bottom of the screen. If you have create a new moveable piece.
-        return createPiece("block");
+        return createPiece("block", "default");
       }
     }
   }
@@ -175,8 +171,8 @@ function renderBoard() {
 
 //where the game starts
 function gameStart() {
-  createPiece("block")
-  const render = setInterval(function () {
+  createPiece("block", "default")
+  const render = setInterval(()=> {
     movePiece("down");
     renderBoard();
   }, 1200)
