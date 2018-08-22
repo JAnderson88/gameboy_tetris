@@ -386,7 +386,7 @@ function renderBoard() {
 
 //where the game starts
 function gameStart() {
-  createPiece("down")
+  createPiece("block")
   const render = setInterval(function () {
     movePiece("down");
     renderBoard();
@@ -397,7 +397,7 @@ function gameStart() {
 //addEventlisteners and call functions
 //eventlisteners for the buttons created to emulate gameboard
 down.addEventListener("click", e => {
-  movePiece("down");
+  movepiece("down");
   renderBoard();
 })
 left.addEventListener("click", e => {
