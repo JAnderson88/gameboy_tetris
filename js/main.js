@@ -130,7 +130,7 @@ function movePiece(direction) {
     if(gameBoard.moveableBlock.baseline.x === 1) return;
     //If it's blocked...don't do anything
     if(!passable) return;
-        //If I can move then update the board, set the new baseline, update the board again then render
+    //If I can move then update the board, set the new baseline, update the board again then render
     updateBoard(0);
     gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x-1, y: gameBoard.moveableBlock.baseline.y};
     updateBoard(1);
