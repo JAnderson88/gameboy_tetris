@@ -63,7 +63,7 @@ const piece = {
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
         right: [{x:2, y:-1},{x:2, y:0}],
-        left: [{x:-1, y:-2},{x:-1, y:-2}]
+        left: [{x:-1, y:-1},{x:-1, y:0}]
       }
     }
   },
@@ -145,7 +145,7 @@ const piece = {
     north: {
       height: 3,
       width: 2,
-      draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: -1 }],
+      draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
         right: [{x:1, y:-2},{x:2, y:-1},{x:2, y:0}],
@@ -169,7 +169,7 @@ const piece = {
       width: 2,
       draw: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
-        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+        down: [{ x: 0, y: 1 }, { x: 1, y: 0 }],
         right: [{x:2, y:-2},{x:2, y:-1},{x:1, y:0}],
         left: [{x:0, y:-2},{x:-1, y:-1},{x:-1, y:0}],
       }
@@ -241,10 +241,10 @@ const piece = {
     south: {
       height: 2,
       width: 3,
-      draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: 0 }],
+      draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
-        right: [{x:1, y:0},{x:2, y:-1}],
+        right: [{x:1, y:0},{x:3, y:-1}],
         left: [{x:-1, y:0},{x:-1, y:-1}],
       }
     },
@@ -263,8 +263,10 @@ const piece = {
 
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
-function createPiece(type, orientation, startX = 5, startY = 1) {
+function createPiece(type, orientation) {
   if (type === "block") {
+    const startX = 5;
+    const startY = 2;
     //check to see if space is available
     if (checkAvailability(startX, startY)) {
       //create the blueprint of the piece
@@ -283,11 +285,13 @@ function createPiece(type, orientation, startX = 5, startY = 1) {
     }
   }
   if (type === "sq_block") {
+    const startX = 5;
+    const startY = 2;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: { x: startX, y: 2 },
+        baseline: { x:5, y: 2 },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -296,11 +300,13 @@ function createPiece(type, orientation, startX = 5, startY = 1) {
     }
    }
   if (type === "i_block") {
+    const startX = 5;
+    const startY = (orientation === "tall")? 4 : 1;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: (orientation === "tall") ? {x: 5, y:4}: {x:5, y:1},
+        baseline: {x:startX, y:startY},
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -308,67 +314,118 @@ function createPiece(type, orientation, startX = 5, startY = 1) {
       renderBoard();
     }
   }
-  if (type === "t_block") { }
-  if (type === "s_left") { }
-  if (type === "s_right") { }
-  if (type === "l_left") { }
-  if (type === "l_right") { }
+  if (type === "t_block") {
+    const startX = (orientation === "north" || orientation === "south") ? 4 : 5;
+    const startY = (orientation === "north" || orientation === "south") ? 2 : 3;
+    if (checkAvailability(startX, startY)) {
+      const piece = {
+        type: type,
+        orientation: orientation,
+        baseline:{x:startX, y:startY},
+        color: "cyan",
+      };
+      gameBoard.moveableBlock = Object.assign({}, piece);
+      updateBoard(1);
+      renderBoard();
+    }
+   }
+  if (type === "s_left") {
+    const startX = 5;
+    const startY = (orientation === "east") ? 2 : 3; 
+    if (checkAvailability(startX, startY)) {
+      const piece = {
+        type: type,
+        orientation: orientation,
+        baseline: {x:startX, y:startY},
+        color: "cyan",
+      };
+      gameBoard.moveableBlock = Object.assign({}, piece);
+      updateBoard(1);
+      renderBoard();
+    }
+  }
+  if (type === "s_right") {
+    const startX = 5;
+    const startY = (orientation === "west") ? 2 : 3;
+    if (checkAvailability(startX, startY)) {
+      const piece = {
+        type: type,
+        orientation: orientation,
+        baseline: {x:startX, y:startY},
+        color: "cyan",
+      };
+      gameBoard.moveableBlock = Object.assign({}, piece);
+      updateBoard(1);
+      renderBoard();
+    }
+  }
+  if (type === "l_left") { 
+    const startX = 5
+    const startY = (orientation === "west" || orientation === "east") ? 3 : 2;
+    if (checkAvailability(startX, startY)) {
+      const piece = {
+        type: type,
+        orientation: orientation,
+        baseline: {x:startX, y:startY},
+        color: "cyan",
+      };
+      gameBoard.moveableBlock = Object.assign({}, piece);
+      updateBoard(1);
+      renderBoard();
+    }
+  }
+  if (type === "l_right") {
+    const startX = 5;
+    const startY = (orientation === "west" || orientation === "east") ? 3 : 2;
+    if (checkAvailability(startX, startY)) {
+      const piece = {
+        type: type,
+        orientation: orientation,
+        baseline: {x:startX, y:startY},
+        color: "cyan",
+      };
+      gameBoard.moveableBlock = Object.assign({}, piece);
+      updateBoard(1);
+      renderBoard();
+    }
+  }
 }
-//moveBlock function tracks when an input is passed in and moves the piece accordingly 
+
+
 function movePiece(direction) {
-  //grab the width of the current moveable block
   const width = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width;
-  // const height = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height;
-  //grab the array that holds the spaces that needs to be checked if they are going 
   const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check[direction]
-  //variable to hold if the piece is able to be moved or not
   let passable;
   for (let i = 0; i < availables.length; i++) {
-    //Loop over the availabes array to see if you have the see somewhere that is blocked. If it is, break from the loop passing a false value in for passable
     passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y);
     if (!passable) break;
   }
   if (direction === "down") {
-    //If it can't pass then create a new moveable piece and start from the top
     if (!passable) {
       updateBoard(1);
       return createPiece("block", "default");
     }
-    //but if it is passable
     if (gameBoard.moveableBlock.baseline.y < 20) {
-      //If you haven't reached the bottom... then update the game board by turning the current places of the moveable block to 0
       updateBoard(0);
-      //Set the new baseline point
       gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x, y: gameBoard.moveableBlock.baseline.y + 1 }
-      //Then from the new baseline point, update the game board again by turning the new positions to 1
       updateBoard(1);
-      //Then render the board
       renderBoard();
       if (gameBoard.moveableBlock.baseline.y === 20) {
-        //Check again if you reached the bottom of the screen. If you have create a new moveable piece.
         return createPiece("block", "default");
       }
     }
   }
-  //If i'm trying to move right...
   if (direction === "right") {
-    //If I can't move right anymore then don't do anything
     if(gameBoard.moveableBlock.baseline.x + width > 10) return;
-    //If it's blocked...don't do anything
     if(!passable) return;
-    //If I can move then update the board, set the new baseline, update the board again then render
     updateBoard(0);
     gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x+1, y: gameBoard.moveableBlock.baseline.y};
     updateBoard(1);
     renderBoard();
    }
-   //If i'm trying to move left...
   if (direction === "left") {
-    //If i'm at the far left...don't do anything
     if(gameBoard.moveableBlock.baseline.x === 1) return;
-    //If it's blocked...don't do anything
     if(!passable) return;
-        //If I can move then update the board, set the new baseline, update the board again then render
     updateBoard(0);
     gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x-1, y: gameBoard.moveableBlock.baseline.y};
     updateBoard(1);
@@ -409,7 +466,7 @@ function renderBoard() {
 
 //where the game starts
 function gameStart() {
-  createPiece("i_block", "long")
+  createPiece("l_right", "south")
   const render = setInterval(function () {
     movePiece("down");
     renderBoard();
@@ -418,7 +475,6 @@ function gameStart() {
 }
 
 //addEventlisteners and call functions
-//eventlisteners for the buttons created to emulate gameboard
 down.addEventListener("click", e => {
   movePiece("down");
   renderBoard();
