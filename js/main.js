@@ -45,6 +45,8 @@ const gameBoard = {
 const piece = {
   block: {
     default: {
+      startX: 5,
+      startY: 1,
       width: 1,
       height: 1,
       draw: [{ x: 0, y: 0 }],
@@ -57,6 +59,8 @@ const piece = {
   },
   sq_block: {
     default: {
+      startX: 5,
+      startY: 2,
       height: 2,
       width: 2,
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
@@ -69,6 +73,8 @@ const piece = {
   },
   i_block: {
     long: {
+      startX: 5,
+      startY: 1,
       height: 1,
       width: 4,
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }],
@@ -79,6 +85,8 @@ const piece = {
       }
     },
     tall: {
+      startX: 5,
+      startY: 4,
       height: 4,
       width: 1,
       draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -3 }],
@@ -91,6 +99,8 @@ const piece = {
   },
   t_block: {
     north: {
+      startX: 4,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
@@ -101,6 +111,8 @@ const piece = {
       }
     },
     east: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 1, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
@@ -111,6 +123,8 @@ const piece = {
       }
     },
     south: {
+      startX: 4,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 1, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
@@ -121,6 +135,8 @@ const piece = {
       }
     },
     west: {
+      startX:5,
+      startY:3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: -1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
@@ -133,6 +149,8 @@ const piece = {
   },
   s_left: {
     east: {
+      startX: 5,
+      startX: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
@@ -143,6 +161,8 @@ const piece = {
       }
     },
     north: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
@@ -155,6 +175,8 @@ const piece = {
   },
   s_right: {
     west: {
+      startX: 5,
+      startX: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
@@ -165,6 +187,8 @@ const piece = {
       }
     },
     south: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
@@ -177,6 +201,8 @@ const piece = {
   },
   l_left: {
     north: {
+      startX: 5,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
@@ -187,6 +213,8 @@ const piece = {
       }
     },
     east: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 1, y: -2 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
@@ -197,6 +225,8 @@ const piece = {
       }
     },
     south: {
+      startX: 5,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
@@ -207,6 +237,8 @@ const piece = {
       }
     },
     west: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
@@ -219,6 +251,8 @@ const piece = {
   },
   l_right: {
     north: {
+      startX: 5,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 2, y: -1 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
@@ -229,6 +263,8 @@ const piece = {
       }
     },
     east: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
@@ -239,6 +275,8 @@ const piece = {
       }
     },
     south: {
+      startX: 5,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
@@ -249,6 +287,8 @@ const piece = {
       }
     },
     west: {
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: -2 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
@@ -263,10 +303,8 @@ const piece = {
 
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
-function createPiece(type, orientation) {
+function createPiece(type, orientation, startX, startY) {
   if (type === "block") {
-    const startX = 5;
-    const startY = 2;
     //check to see if space is available
     if (checkAvailability(startX, startY)) {
       //create the blueprint of the piece
@@ -285,13 +323,11 @@ function createPiece(type, orientation) {
     }
   }
   if (type === "sq_block") {
-    const startX = 5;
-    const startY = 2;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: { x:5, y: 2 },
+        baseline: { x:startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -300,8 +336,6 @@ function createPiece(type, orientation) {
     }
    }
   if (type === "i_block") {
-    const startX = 5;
-    const startY = (orientation === "tall")? 4 : 1;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
@@ -315,8 +349,6 @@ function createPiece(type, orientation) {
     }
   }
   if (type === "t_block") {
-    const startX = (orientation === "north" || orientation === "south") ? 4 : 5;
-    const startY = (orientation === "north" || orientation === "south") ? 2 : 3;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
@@ -330,8 +362,6 @@ function createPiece(type, orientation) {
     }
    }
   if (type === "s_left") {
-    const startX = 5;
-    const startY = (orientation === "east") ? 2 : 3; 
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
@@ -345,8 +375,6 @@ function createPiece(type, orientation) {
     }
   }
   if (type === "s_right") {
-    const startX = 5;
-    const startY = (orientation === "west") ? 2 : 3;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
@@ -360,8 +388,6 @@ function createPiece(type, orientation) {
     }
   }
   if (type === "l_left") { 
-    const startX = 5
-    const startY = (orientation === "west" || orientation === "east") ? 3 : 2;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
@@ -375,8 +401,6 @@ function createPiece(type, orientation) {
     }
   }
   if (type === "l_right") {
-    const startX = 5;
-    const startY = (orientation === "west" || orientation === "east") ? 3 : 2;
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
@@ -391,7 +415,6 @@ function createPiece(type, orientation) {
   }
 }
 
-
 function movePiece(direction) {
   const width = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width;
   const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check[direction]
@@ -403,7 +426,7 @@ function movePiece(direction) {
   if (direction === "down") {
     if (!passable) {
       updateBoard(1);
-      return createPiece("block", "default");
+      return createPiece("l_left", "west", piece["l_left"]["west"].startX, piece["l_left"]["west"].startY);
     }
     if (gameBoard.moveableBlock.baseline.y < 20) {
       updateBoard(0);
@@ -411,8 +434,7 @@ function movePiece(direction) {
       updateBoard(1);
       renderBoard();
       if (gameBoard.moveableBlock.baseline.y === 20) {
-        return createPiece("block", "default");
-      }
+        return createPiece("l_left", "west", piece["l_left"]["west"].startX, piece["l_left"]["west"].startY);      }
     }
   }
   if (direction === "right") {
@@ -466,8 +488,8 @@ function renderBoard() {
 
 //where the game starts
 function gameStart() {
-  createPiece("l_right", "south")
-  const render = setInterval(function () {
+  createPiece("l_left", "west", piece["l_left"]["west"].startX, piece["l_left"]["west"].startY);
+  const render = setInterval(() => {
     movePiece("down");
     renderBoard();
   }, 1200)
