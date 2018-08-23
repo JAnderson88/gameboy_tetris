@@ -150,7 +150,7 @@ const piece = {
   s_left: {
     east: {
       startX: 5,
-      startX: 2,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
@@ -176,7 +176,7 @@ const piece = {
   s_right: {
     west: {
       startX: 5,
-      startX: 2,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
