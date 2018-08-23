@@ -52,8 +52,8 @@ const piece = {
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
-        right: [{ x: 2, y: -1 }, { x: 2, y: 0 }],
-        left: [{ x: -1, y: -1 }, { x: -1, y: 0 }]
+        right: [{x:2, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-1},{x:-1, y:0}]
       }
     }
   },
@@ -66,8 +66,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }],
-        right: [{ x: 4, y: 0 }],
-        left: [{ x: -1, y: 0 }],
+        right: [{x:4, y:0}],
+        left: [{x:-1, y:0}],
       }
     },
     tall: {
@@ -78,8 +78,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -3 }],
       check: {
         down: [{ x: 0, y: 1 }],
-        right: [{ x: 1, y: -3 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
-        left: [{ x: -1, y: -3 }, { x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:1, y:-3},{x:1, y:-2},{x:1, y:-1},{x:1, y:0}],
+        left: [{x:-1, y:-3},{x:-1, y:-2},{x:-1, y:-1},{x:-1, y:0}],
       }
     }
   },
@@ -92,8 +92,8 @@ const piece = {
       draw: [{ x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        right: [{ x: 2, y: -1 }, { x: 3, y: 0 }],
-        left: [{ x: 0, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:2, y:-1},{x:3, y:0}],
+        left: [{x:0, y:-1},{x:-1, y:0}],
       }
     },
     east: {
@@ -104,8 +104,8 @@ const piece = {
       draw: [{ x: 1, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 1, y: 0 }, { x: 0, y: 1 }],
-        right: [{ x: 2, y: -1 }, { x: 1, y: -2 }, { x: 1, y: 0 }],
-        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:2, y:-1},{x:1, y:-2},{x:1, y:0}],
+        left: [{x:-1, y: -2},{x:-1, y:-1},{x:-1, y:0}],
       }
     },
     south: {
@@ -116,34 +116,34 @@ const piece = {
       draw: [{ x: 1, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
       check: {
         down: [{ x: 1, y: 1 }, { x: 2, y: 0 }, { x: 0, y: 0 }],
-        right: [{ x: 3, y: 0 }, { x: 3, y: -1 }],
-        left: [{ x: 0, y: 0 }, { x: -1, y: -1 }],
+        right: [{x:3, y:0},{x:3, y:-1}],
+        left: [{x:0, y:0},{x:-1, y:-1}],
       }
     },
     west: {
-      startX: 5,
-      startY: 3,
+      startX:5,
+      startY:3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: -1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
-        right: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 2, y: -2 }],
-        left: [{ x: -1, y: -1 }, { x: 0, y: 0 }, { x: 0, y: -2 }],
+        right: [{x:2, y:0},{x:2, y:-1},{x:2, y:-2}],
+        left: [{x:-1, y:-1},{x:0, y:0},{x:0, y:-2}],
       }
     },
   },
   s_left: {
     east: {
       startX: 5,
-      startY: 2,
+      startX: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 0 }],
-        right: [{ x: 2, y: 0 }, { x: 3, y: -1 }],
-        left: [{ x: -1, y: 0 }, { x: 0, y: -1 }],
+        right: [{x:2, y:0}, {x:3, y:-1}],
+        left: [{x:-1, y:0}, {x:0, y:-1}],
       }
     },
     north: {
@@ -154,22 +154,22 @@ const piece = {
       draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
-        right: [{ x: 1, y: -2 }, { x: 2, y: -1 }, { x: 2, y: 0 }],
-        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: 0, y: 0 }],
+        right: [{x:1, y:-2},{x:2, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-2},{x:-1, y:-1},{x:0, y:0}],
       }
     }
   },
   s_right: {
     west: {
       startX: 5,
-      startY: 2,
+      startX: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        right: [{ x: 2, y: -1 }, { x: 3, y: 0 }],
-        left: [{ x: -1, y: -1 }, { x: 0, y: 0 }],
+        right: [{x:2, y:-1},{x:3, y:0}],
+        left: [{x:-1, y:-1}, {x:0, y:0}],
       }
     },
     south: {
@@ -180,8 +180,8 @@ const piece = {
       draw: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 0 }],
-        right: [{ x: 2, y: -2 }, { x: 2, y: -1 }, { x: 1, y: 0 }],
-        left: [{ x: 0, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:2, y:-2},{x:2, y:-1},{x:1, y:0}],
+        left: [{x:0, y:-2},{x:-1, y:-1},{x:-1, y:0}],
       }
     }
   },
@@ -194,8 +194,8 @@ const piece = {
       draw: [{ x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        right: [{ x: 1, y: -1 }, { x: 3, y: 0 }],
-        left: [{ x: -1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:1, y:-1},{x:3, y:0}],
+        left: [{x:-1, y:-1},{x:-1, y:0}],
       }
     },
     east: {
@@ -206,8 +206,8 @@ const piece = {
       draw: [{ x: 1, y: -2 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 1, y: -1 }, { x: 0, y: 1 }],
-        right: [{ x: 2, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
-        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:2, y:-2},{x:1, y:-1},{x:1, y:0}],
+        left: [{x:-1, y:-2}, {x:-1, y:-1}, {x:-1, y:0}],
       }
     },
     south: {
@@ -218,8 +218,8 @@ const piece = {
       draw: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
       check: {
         down: [{ x: 2, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
-        right: [{ x: 3, y: 0 }, { x: 3, y: -1 }],
-        left: [{ x: 1, y: 0 }, { x: -1, y: -1 }],
+        right: [{x:3, y:0},{x:3, y:-1}],
+        left: [{x:1, y:0},{x:-1, y:-1}],
       }
     },
     west: {
@@ -230,8 +230,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
-        right: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 2, y: -2 }],
-        left: [{ x: -1, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }],
+        right: [{x:2, y:0 },{x:2, y:-1},{x:2, y:-2}],
+        left: [{x:-1, y:0},{x:0, y:-1},{x:0, y:-2}],
       }
     },
   },
@@ -244,8 +244,8 @@ const piece = {
       draw: [{ x: 2, y: -1 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 2, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 1 }],
-        right: [{ x: 3, y: 0 }, { x: 3, y: -1 }],
-        left: [{ x: 1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:3, y:0},{x:3, y:-1}],
+        left: [{x:1, y:-1}, {x:-1, y:0}],
       }
     },
     east: {
@@ -256,8 +256,8 @@ const piece = {
       draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
-        right: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 2, y: 0 }],
-        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
+        right: [{x:1, y:-2},{x:1, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-2}, {x:-1, y:-1}, {x:-1, y:0}],
       }
     },
     south: {
@@ -268,8 +268,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
-        right: [{ x: 1, y: 0 }, { x: 3, y: -1 }],
-        left: [{ x: -1, y: 0 }, { x: -1, y: -1 }],
+        right: [{x:1, y:0},{x:3, y:-1}],
+        left: [{x:-1, y:0},{x:-1, y:-1}],
       }
     },
     west: {
@@ -280,8 +280,267 @@ const piece = {
       draw: [{ x: 0, y: -2 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: -1 }, { x: 1, y: 1 }],
-        right: [{ x: 2, y: -2 }, { x: 2, y: -1 }, { x: 2, y: 0 }],
-        left: [{ x: -1, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+        right: [{x:2, y:-2},{x:2, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-2},{x:0, y:-1},{x:0, y:0}],
+      }
+    }
+  }
+}
+
+const piece = {
+  block: {
+    default: {
+      startX: 5,
+      startY: 1,
+      width: 1,
+      height: 1,
+      draw: [{ x: 0, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }],
+        right: [{ x: 1, y: 0 }],
+        left: [{ x: -1, y: 0 }],
+      }
+    }
+  },
+  sq_block: {
+    default: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 2,
+      draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+        right: [{x:2, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-1},{x:-1, y:0}]
+      }
+    }
+  },
+  i_block: {
+    long: {
+      startX: 5,
+      startY: 1,
+      height: 1,
+      width: 4,
+      draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }],
+        right: [{x:4, y:0}],
+        left: [{x:-1, y:0}],
+      }
+    },
+    tall: {
+      startX: 5,
+      startY: 4,
+      height: 4,
+      width: 1,
+      draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -3 }],
+      check: {
+        down: [{ x: 0, y: 1 }],
+        right: [{x:1, y:-3},{x:1, y:-2},{x:1, y:-1},{x:1, y:0}],
+        left: [{x:-1, y:-3},{x:-1, y:-2},{x:-1, y:-1},{x:-1, y:0}],
+      }
+    }
+  },
+  t_block: {
+    north: {
+      startX: 4,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        right: [{x:2, y:-1},{x:3, y:0}],
+        left: [{x:0, y:-1},{x:-1, y:0}],
+      }
+    },
+    east: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 1, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 1, y: 0 }, { x: 0, y: 1 }],
+        right: [{x:2, y:-1},{x:1, y:-2},{x:1, y:0}],
+        left: [{x:-1, y: -2},{x:-1, y:-1},{x:-1, y:0}],
+      }
+    },
+    south: {
+      startX: 4,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 1, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
+      check: {
+        down: [{ x: 1, y: 1 }, { x: 2, y: 0 }, { x: 0, y: 0 }],
+        right: [{x:3, y:0},{x:3, y:-1}],
+        left: [{x:0, y:0},{x:-1, y:-1}],
+      }
+    },
+    west: {
+      startX:5,
+      startY:3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 0, y: -1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+        right: [{x:2, y:0},{x:2, y:-1},{x:2, y:-2}],
+        left: [{x:-1, y:-1},{x:0, y:0},{x:0, y:-2}],
+      }
+    },
+  },
+  s_left: {
+    east: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 0 }],
+        right: [{x:2, y:0}, {x:3, y:-1}],
+        left: [{x:-1, y:0}, {x:0, y:-1}],
+      }
+    },
+    north: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+        right: [{x:1, y:-2},{x:2, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-2},{x:-1, y:-1},{x:0, y:0}],
+      }
+    }
+  },
+  s_right: {
+    west: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        right: [{x:2, y:-1},{x:3, y:0}],
+        left: [{x:-1, y:-1}, {x:0, y:0}],
+      }
+    },
+    south: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 0 }],
+        right: [{x:2, y:-2},{x:2, y:-1},{x:1, y:0}],
+        left: [{x:0, y:-2},{x:-1, y:-1},{x:-1, y:0}],
+      }
+    }
+  },
+  l_left: {
+    north: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        right: [{x:1, y:-1},{x:3, y:0}],
+        left: [{x:-1, y:-1},{x:-1, y:0}],
+      }
+    },
+    east: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 1, y: -2 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 1, y: -1 }, { x: 0, y: 1 }],
+        right: [{x:2, y:-2},{x:1, y:-1},{x:1, y:0}],
+        left: [{x:-1, y:-2}, {x:-1, y:-1}, {x:-1, y:0}],
+      }
+    },
+    south: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
+      check: {
+        down: [{ x: 2, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
+        right: [{x:3, y:0},{x:3, y:-1}],
+        left: [{x:1, y:0},{x:-1, y:-1}],
+      }
+    },
+    west: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+        right: [{x:2, y:0 },{x:2, y:-1},{x:2, y:-2}],
+        left: [{x:-1, y:0},{x:0, y:-1},{x:0, y:-2}],
+      }
+    },
+  },
+  l_right: {
+    north: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 2, y: -1 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
+      check: {
+        down: [{ x: 2, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 1 }],
+        right: [{x:3, y:0},{x:3, y:-1}],
+        left: [{x:1, y:-1}, {x:-1, y:0}],
+      }
+    },
+    east: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+        right: [{x:1, y:-2},{x:1, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-2}, {x:-1, y:-1}, {x:-1, y:0}],
+      }
+    },
+    south: {
+      startX: 5,
+      startY: 2,
+      height: 2,
+      width: 3,
+      draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
+      check: {
+        down: [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+        right: [{x:1, y:0},{x:3, y:-1}],
+        left: [{x:-1, y:0},{x:-1, y:-1}],
+      }
+    },
+    west: {
+      startX: 5,
+      startY: 3,
+      height: 3,
+      width: 2,
+      draw: [{ x: 0, y: -2 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
+      check: {
+        down: [{ x: 0, y: -1 }, { x: 1, y: 1 }],
+        right: [{x:2, y:-2},{x:2, y:-1},{x:2, y:0}],
+        left: [{x:-1, y:-2},{x:0, y:-1},{x:0, y:0}],
       }
     }
   }
