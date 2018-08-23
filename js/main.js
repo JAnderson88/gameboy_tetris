@@ -460,16 +460,23 @@ function renderBoard() {
 }
 
 //function to rotate the piece
-function rotatePiece() {
+function rotatePiece(){ 
   const orientations = Object.keys(piece[gameBoard.moveableBlock.type]);
   let index = orientations.indexOf(gameBoard.moveableBlock.orientation);
-  index = (index >= orientations.length - 1) ? 0 : index + 1;
+  index = (index >= orientations.length -1) ? 0 : index + 1;
+  const availables = piece[gameBoard.moveableBlock.type][orientations[index]].draw
+  let passable;
+  for (let i = 0; i < availables.length; i++) {
+    passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y);
+    if (!passable) break;
+  }
+  if(passable){ return; }
   updateBoard(0);
   gameBoard.moveableBlock.orientation = orientations[index];
-  if (gameBoard.moveableBlock.baseline.y < piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height) {
+  if(gameBoard.moveableBlock.baseline.y < piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height){
     gameBoard.moveableBlock.baseline.y = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height
   }
-  if (gameBoard.moveableBlock.baseline.x + piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width > 10) {
+  if(gameBoard.moveableBlock.baseline.x + piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width > 10){
     gameBoard.moveableBlock.baseline.x--;
   }
   updateBoard(1);
