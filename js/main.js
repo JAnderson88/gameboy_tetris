@@ -43,20 +43,6 @@ const gameBoard = {
   --A check object that contains which positions to check depending on the which direction you want to move
 */
 const piece = {
-  block: {
-    default: {
-      startX: 5,
-      startY: 1,
-      width: 1,
-      height: 1,
-      draw: [{ x: 0, y: 0 }],
-      check: {
-        down: [{ x: 0, y: 1 }],
-        right: [{ x: 1, y: 0 }],
-        left: [{ x: -1, y: 0 }],
-      }
-    }
-  },
   sq_block: {
     default: {
       startX: 5,
@@ -66,8 +52,8 @@ const piece = {
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
-        right: [{x:2, y:-1},{x:2, y:0}],
-        left: [{x:-1, y:-1},{x:-1, y:0}]
+        right: [{ x: 2, y: -1 }, { x: 2, y: 0 }],
+        left: [{ x: -1, y: -1 }, { x: -1, y: 0 }]
       }
     }
   },
@@ -80,8 +66,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }],
-        right: [{x:4, y:0}],
-        left: [{x:-1, y:0}],
+        right: [{ x: 4, y: 0 }],
+        left: [{ x: -1, y: 0 }],
       }
     },
     tall: {
@@ -92,8 +78,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -3 }],
       check: {
         down: [{ x: 0, y: 1 }],
-        right: [{x:1, y:-3},{x:1, y:-2},{x:1, y:-1},{x:1, y:0}],
-        left: [{x:-1, y:-3},{x:-1, y:-2},{x:-1, y:-1},{x:-1, y:0}],
+        right: [{ x: 1, y: -3 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
+        left: [{ x: -1, y: -3 }, { x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
       }
     }
   },
@@ -106,8 +92,8 @@ const piece = {
       draw: [{ x: 1, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        right: [{x:2, y:-1},{x:3, y:0}],
-        left: [{x:0, y:-1},{x:-1, y:0}],
+        right: [{ x: 2, y: -1 }, { x: 3, y: 0 }],
+        left: [{ x: 0, y: -1 }, { x: -1, y: 0 }],
       }
     },
     east: {
@@ -118,8 +104,8 @@ const piece = {
       draw: [{ x: 1, y: -1 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 1, y: 0 }, { x: 0, y: 1 }],
-        right: [{x:2, y:-1},{x:1, y:-2},{x:1, y:0}],
-        left: [{x:-1, y: -2},{x:-1, y:-1},{x:-1, y:0}],
+        right: [{ x: 2, y: -1 }, { x: 1, y: -2 }, { x: 1, y: 0 }],
+        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
       }
     },
     south: {
@@ -130,34 +116,34 @@ const piece = {
       draw: [{ x: 1, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
       check: {
         down: [{ x: 1, y: 1 }, { x: 2, y: 0 }, { x: 0, y: 0 }],
-        right: [{x:3, y:0},{x:3, y:-1}],
-        left: [{x:0, y:0},{x:-1, y:-1}],
+        right: [{ x: 3, y: 0 }, { x: 3, y: -1 }],
+        left: [{ x: 0, y: 0 }, { x: -1, y: -1 }],
       }
     },
     west: {
-      startX:5,
-      startY:3,
+      startX: 5,
+      startY: 3,
       height: 3,
       width: 2,
       draw: [{ x: 0, y: -1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
-        right: [{x:2, y:0},{x:2, y:-1},{x:2, y:-2}],
-        left: [{x:-1, y:-1},{x:0, y:0},{x:0, y:-2}],
+        right: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 2, y: -2 }],
+        left: [{ x: -1, y: -1 }, { x: 0, y: 0 }, { x: 0, y: -2 }],
       }
     },
   },
   s_left: {
     east: {
       startX: 5,
-      startX: 2,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 0 }],
-        right: [{x:2, y:0}, {x:3, y:-1}],
-        left: [{x:-1, y:0}, {x:0, y:-1}],
+        right: [{ x: 2, y: 0 }, { x: 3, y: -1 }],
+        left: [{ x: -1, y: 0 }, { x: 0, y: -1 }],
       }
     },
     north: {
@@ -168,22 +154,22 @@ const piece = {
       draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
-        right: [{x:1, y:-2},{x:2, y:-1},{x:2, y:0}],
-        left: [{x:-1, y:-2},{x:-1, y:-1},{x:0, y:0}],
+        right: [{ x: 1, y: -2 }, { x: 2, y: -1 }, { x: 2, y: 0 }],
+        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: 0, y: 0 }],
       }
     }
   },
   s_right: {
     west: {
       startX: 5,
-      startX: 2,
+      startY: 2,
       height: 2,
       width: 3,
       draw: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
       check: {
         down: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        right: [{x:2, y:-1},{x:3, y:0}],
-        left: [{x:-1, y:-1}, {x:0, y:0}],
+        right: [{ x: 2, y: -1 }, { x: 3, y: 0 }],
+        left: [{ x: -1, y: -1 }, { x: 0, y: 0 }],
       }
     },
     south: {
@@ -194,8 +180,8 @@ const piece = {
       draw: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 0 }],
-        right: [{x:2, y:-2},{x:2, y:-1},{x:1, y:0}],
-        left: [{x:0, y:-2},{x:-1, y:-1},{x:-1, y:0}],
+        right: [{ x: 2, y: -2 }, { x: 2, y: -1 }, { x: 1, y: 0 }],
+        left: [{ x: 0, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
       }
     }
   },
@@ -208,8 +194,8 @@ const piece = {
       draw: [{ x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        right: [{x:1, y:-1},{x:3, y:0}],
-        left: [{x:-1, y:-1},{x:-1, y:0}],
+        right: [{ x: 1, y: -1 }, { x: 3, y: 0 }],
+        left: [{ x: -1, y: -1 }, { x: -1, y: 0 }],
       }
     },
     east: {
@@ -220,8 +206,8 @@ const piece = {
       draw: [{ x: 1, y: -2 }, { x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 1, y: -1 }, { x: 0, y: 1 }],
-        right: [{x:2, y:-2},{x:1, y:-1},{x:1, y:0}],
-        left: [{x:-1, y:-2}, {x:-1, y:-1}, {x:-1, y:0}],
+        right: [{ x: 2, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
+        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
       }
     },
     south: {
@@ -232,8 +218,8 @@ const piece = {
       draw: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 1, y: -1 }, { x: 0, y: -1 }],
       check: {
         down: [{ x: 2, y: 1 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
-        right: [{x:3, y:0},{x:3, y:-1}],
-        left: [{x:1, y:0},{x:-1, y:-1}],
+        right: [{ x: 3, y: 0 }, { x: 3, y: -1 }],
+        left: [{ x: 1, y: 0 }, { x: -1, y: -1 }],
       }
     },
     west: {
@@ -244,8 +230,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: -2 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
-        right: [{x:2, y:0 },{x:2, y:-1},{x:2, y:-2}],
-        left: [{x:-1, y:0},{x:0, y:-1},{x:0, y:-2}],
+        right: [{ x: 2, y: 0 }, { x: 2, y: -1 }, { x: 2, y: -2 }],
+        left: [{ x: -1, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }],
       }
     },
   },
@@ -258,8 +244,8 @@ const piece = {
       draw: [{ x: 2, y: -1 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }],
       check: {
         down: [{ x: 2, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 1 }],
-        right: [{x:3, y:0},{x:3, y:-1}],
-        left: [{x:1, y:-1}, {x:-1, y:0}],
+        right: [{ x: 3, y: 0 }, { x: 3, y: -1 }],
+        left: [{ x: 1, y: -1 }, { x: -1, y: 0 }],
       }
     },
     east: {
@@ -270,8 +256,8 @@ const piece = {
       draw: [{ x: 0, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
-        right: [{x:1, y:-2},{x:1, y:-1},{x:2, y:0}],
-        left: [{x:-1, y:-2}, {x:-1, y:-1}, {x:-1, y:0}],
+        right: [{ x: 1, y: -2 }, { x: 1, y: -1 }, { x: 2, y: 0 }],
+        left: [{ x: -1, y: -2 }, { x: -1, y: -1 }, { x: -1, y: 0 }],
       }
     },
     south: {
@@ -282,8 +268,8 @@ const piece = {
       draw: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }],
       check: {
         down: [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
-        right: [{x:1, y:0},{x:3, y:-1}],
-        left: [{x:-1, y:0},{x:-1, y:-1}],
+        right: [{ x: 1, y: 0 }, { x: 3, y: -1 }],
+        left: [{ x: -1, y: 0 }, { x: -1, y: -1 }],
       }
     },
     west: {
@@ -294,8 +280,8 @@ const piece = {
       draw: [{ x: 0, y: -2 }, { x: 1, y: -2 }, { x: 1, y: -1 }, { x: 1, y: 0 }],
       check: {
         down: [{ x: 0, y: -1 }, { x: 1, y: 1 }],
-        right: [{x:2, y:-2},{x:2, y:-1},{x:2, y:0}],
-        left: [{x:-1, y:-2},{x:0, y:-1},{x:0, y:0}],
+        right: [{ x: 2, y: -2 }, { x: 2, y: -1 }, { x: 2, y: 0 }],
+        left: [{ x: -1, y: -2 }, { x: 0, y: -1 }, { x: 0, y: 0 }],
       }
     }
   }
@@ -304,43 +290,25 @@ const piece = {
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
 function createPiece(type, orientation, startX, startY) {
-  if (type === "block") {
-    //check to see if space is available
+  if (type === "sq_block") {
     if (checkAvailability(startX, startY)) {
-      //create the blueprint of the piece
       const piece = {
         type: type,
         orientation: orientation,
         baseline: { x: startX, y: startY },
         color: "cyan",
       };
-      //set it as the game board's moveable block
       gameBoard.moveableBlock = Object.assign({}, piece);
-      //update the game board
       updateBoard(1);
-      //then render it
       renderBoard();
     }
   }
-  if (type === "sq_block") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x:startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-   }
   if (type === "i_block") {
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: {x:startX, y:startY},
+        baseline: { x: startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -353,20 +321,20 @@ function createPiece(type, orientation, startX, startY) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline:{x:startX, y:startY},
+        baseline: { x: startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
       updateBoard(1);
       renderBoard();
     }
-   }
+  }
   if (type === "s_left") {
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: {x:startX, y:startY},
+        baseline: { x: startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -379,7 +347,7 @@ function createPiece(type, orientation, startX, startY) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: {x:startX, y:startY},
+        baseline: { x: startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -387,12 +355,12 @@ function createPiece(type, orientation, startX, startY) {
       renderBoard();
     }
   }
-  if (type === "l_left") { 
+  if (type === "l_left") {
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: {x:startX, y:startY},
+        baseline: { x: startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -405,7 +373,7 @@ function createPiece(type, orientation, startX, startY) {
       const piece = {
         type: type,
         orientation: orientation,
-        baseline: {x:startX, y:startY},
+        baseline: { x: startX, y: startY },
         color: "cyan",
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
@@ -427,7 +395,8 @@ function movePiece(direction) {
   if (direction === "down") {
     if (!passable) {
       updateBoard(1);
-      return createPiece("l_right", "south", piece["l_right"]["south"].startX, piece["l_right"]["south"].startY);
+      const { type, orientation, startX, startY } = getRandomPiece();
+      return createPiece(type, orientation, startX, startY)
     }
     if (gameBoard.moveableBlock.baseline.y < 20) {
       updateBoard(0);
@@ -435,26 +404,27 @@ function movePiece(direction) {
       updateBoard(1);
       renderBoard();
       if (gameBoard.moveableBlock.baseline.y === 20) {
-        return createPiece("l_right", "south", piece["l_right"]["south"].startX, piece["l_right"]["south"].startY);
+        const { type, orientation, startX, startY } = getRandomPiece();
+        return createPiece(type, orientation, startX, startY)
       }
     }
   }
   if (direction === "right") {
-    if(gameBoard.moveableBlock.baseline.x + width > 10) return;
-    if(!passable) return;
+    if (gameBoard.moveableBlock.baseline.x + width > 10) return;
+    if (!passable) return;
     updateBoard(0);
-    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x+1, y: gameBoard.moveableBlock.baseline.y};
+    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x + 1, y: gameBoard.moveableBlock.baseline.y };
     updateBoard(1);
     renderBoard();
-   }
+  }
   if (direction === "left") {
-    if(gameBoard.moveableBlock.baseline.x === 1) return;
-    if(!passable) return;
+    if (gameBoard.moveableBlock.baseline.x === 1) return;
+    if (!passable) return;
     updateBoard(0);
-    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x-1, y: gameBoard.moveableBlock.baseline.y};
+    gameBoard.moveableBlock.baseline = { x: gameBoard.moveableBlock.baseline.x - 1, y: gameBoard.moveableBlock.baseline.y };
     updateBoard(1);
     renderBoard();
-   }
+  }
 }
 
 //Checks if a space is available
@@ -489,33 +459,44 @@ function renderBoard() {
 }
 
 //function to rotate the piece
-function rotatePiece(){
-  //Grab all the different types of orientations for each piece 
+function rotatePiece() {
   const orientations = Object.keys(piece[gameBoard.moveableBlock.type]);
-  //find the index of the current orientation
   let index = orientations.indexOf(gameBoard.moveableBlock.orientation);
-  //Increment the orientation
-  index = (index >= orientations.length -1) ? 0 : index + 1;
-  //remove the current piece from the game board
+  index = (index >= orientations.length - 1) ? 0 : index + 1;
   updateBoard(0);
-  //update the moveable block's orientation
   gameBoard.moveableBlock.orientation = orientations[index];
-  //If the piece is rotated when its to high and is rendered off the board...move it down a bit
-  if(gameBoard.moveableBlock.baseline.y < piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height){
+  if (gameBoard.moveableBlock.baseline.y < piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height) {
     gameBoard.moveableBlock.baseline.y = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height
   }
-  //If the piece is roatated when its to far to the right of the bard...move it over to the left
-  if(gameBoard.moveableBlock.baseline.x + piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width > 10){
+  if (gameBoard.moveableBlock.baseline.x + piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width > 10) {
     gameBoard.moveableBlock.baseline.x--;
   }
-  //add the current piece back to the game board
   updateBoard(1);
-  // re-render the board
   renderBoard();
 }
+
+function getRandomPiece() {
+  //Grab all possible types of pieces
+  const types = Object.keys(piece)
+  //Pick a random type from the pieces array
+  const type = Math.floor(Math.random() * types.length)
+  //Grab all the possible orientations based on your piece
+  const orientations = Object.keys(piece[types[type]])
+  //Pick a random orientation from the oirentations array
+  const orientation = Math.floor(Math.random() * orientations.length)
+  //return the random piece to be created
+  return {
+    type: types[type],
+    orientation: orientations[orientation],
+    startX: piece[types[type]][orientations[orientation]].startX,
+    startY: piece[types[type]][orientations[orientation]].startY
+  }
+}
+
 //where the game starts
 function gameStart() {
-  createPiece("l_right", "south", piece["l_right"]["south"].startX, piece["l_right"]["south"].startY)
+  const { type, orientation, startX, startY } = getRandomPiece();
+  createPiece(type, orientation, startX, startY)
   const render = setInterval(function () {
     movePiece("down");
     renderBoard();
@@ -541,7 +522,7 @@ a.addEventListener("click", rotatePiece)
 // b.addEventListener("click", displayTest)
 
 document.addEventListener("keydown", e => {
-  if(e.key === "ArrowUp"){
+  if (e.key === "ArrowUp") {
     rotatePiece();
   }
   if (e.key === "ArrowDown") {
@@ -556,10 +537,8 @@ document.addEventListener("keydown", e => {
   if (e.key === "a") {
     rotatePiece()
   }
-  if (e.key === "z") {}
+  if (e.key === "z") { }
   renderBoard();
 })
 //Start the game
 gameStart();
-// rotatePiece();
-
