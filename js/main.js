@@ -45,6 +45,8 @@ const gameBoard = {
 const piece = {
   block: {
     default: {
+      startX:5,
+      startY:1,
       width: 1,
       height: 1,
       draw: [{ x: 0, y: 0 }],
@@ -59,10 +61,8 @@ const piece = {
 
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
-function createPiece(type, orientation) {
+function createPiece(type, orientation, startX = 5, startY = 1) {
   if (type === "block") {
-    const startX = 5;
-    const startY = 1;
     //check to see if space is available
     if (checkAvailability(startX, startY)) {
       //create the blueprint of the piece
