@@ -463,7 +463,6 @@ function renderBoard() {
 
 //function to rotate the piece
 function rotatePiece() {
-  //Grab all the different types of orientations for each piece 
   const orientations = Object.keys(piece[gameBoard.moveableBlock.type]);
   let index = orientations.indexOf(gameBoard.moveableBlock.orientation);
   index = (index >= orientations.length - 1) ? 0 : index + 1;
@@ -501,42 +500,26 @@ function getRandomPiece() {
 
 //function  to remove arrow when get them all in a line
 function removeRows() {
-  //Grab all the rows in the gameBoard object
   const rows = Object.keys(gameBoard).slice(0, Object.keys(gameBoard).length - 1);
-  //This is a simple refrence array so I can make an empty array...more on that later
   const empty = [];
-  //Temp array is going to hold a copy of rows that are above the row that is going to be deleted
   let temp = [];
-  //Memorizes the lines that need to be deleted. Going to pass this into the scorePoints function later.
   let lines = 0;
-  //Now loop through every row to find the row that needs to be deleted
   for (let i = 1; i < rows.length; i++) {
-    //Use the reduce function to add up the values of each row (array) 
     const row = gameBoard[rows[i]].reduce((a, b) => {
       return a += b;
     });
-    //If you get a value of a 10, then begin to the process of removing the array
     if (row === 10) {
-      //Increment the lines value to indicate you found an row to be erased
       lines++
-      //Now that you found a row to be deleted, loop again and set the new incrementor value to the value of i then decrement back to the top
       for (let j = i; j > 1; j--) {
-        //Set each row in the gameBoard to the row right above it using the temp array as a reference
-        gameBoard[rows[j]] = [].concat(temp[j-2]);
+        gameBoard[rows[j]] = [].concat(temp[j - 2]);
       }
-      //We set i back to 0 so we can loop over again and see if there are anymore rows that needs to be deleted
-      i=0;
-      //Remember when I said 'more on that later'...here's the more. You can't just set an array equal to another array so you use that empty array as a prototype and use the concat function to make a new copy 
+      i = 0;
       temp = [].concat(empty);
-      //Then continue again with the for loop
       continue;
     }
-    //If you looked into a row and that row didn't need to be deleted, then add that row to the temp array so you can reference it later
     temp.push(gameBoard[rows[i]])
   }
-  //Once you completed your task of removeing and dropping rows then do the scorePoints function
   scorePoints(lines);
-  //This is only temporary
   console.log(points);
 }
 
@@ -545,18 +528,54 @@ function removeRows() {
 // 2 Lines = 150*(level + 1) points
 // 3 Lines = 350*(level + 1) points
 // 4 Lines = 1000*(level + 1) points (aka a Tetris)
-function scorePoints(line){
-  if(line === 1){
+function scorePoints(line) {
+  if (line === 1) {
     points += 100;
   }
-  if(line === 2){
+  if (line === 2) {
     points += 300;
   }
-  if(line === 3){
+  if (line === 3) {
     points += 700;
   }
-  if(line === 4){
+  if (line === 4) {
     points += 2000;
+  }
+}
+
+//This function forces the moveable blocks down to the last available blocks
+function gravityDrop() {
+  //clear the moveable Piece
+  updateBoard(0);
+  //This check variable starts my while loop
+  let check = false
+  //Passable checks if the moveable piece can move down similar to the moveBlock function
+  let passable;
+  while (!check) {
+    const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check.down;
+    for (let i = 0; i < availables.length; i++) {
+      passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y);
+      if (!passable) break;
+    }
+    if (!passable) {
+      updateBoard(1)
+      renderBoard();
+      removeRows();
+      const { type, orientation, startX, startY } = getRandomPiece();
+      return createPiece(type, orientation, startX, startY)
+    }
+    //If you can pass then move the moveable block down one and then increment the loop
+    if (gameBoard.moveableBlock.baseline.y < 19) {
+      gameBoard.moveableBlock.baseline.y++;
+      continue;
+    } else {
+      gameBoard.moveableBlock.baseline.y = 20;
+      updateBoard(1)
+      renderBoard();
+      removeRows();
+      const { type, orientation, startX, startY } = getRandomPiece();
+      return createPiece(type, orientation, startX, startY)
+    }
   }
 }
 
@@ -603,7 +622,9 @@ document.addEventListener("keydown", e => {
   if (e.key === "a") {
     rotatePiece()
   }
-  if (e.key === "z") { }
+  if (e.key === "z") {
+    gravityDrop();
+  }
   renderBoard();
 })
 //Start the game
