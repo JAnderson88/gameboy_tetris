@@ -316,9 +316,11 @@ const piece = {
   }
 }
 
+//State variables
 let points = 0;
 let level = 1;
 let lines = 0
+//Grab next Piece
 let nextPiece = getRandomPiece();
 
 //define functions
