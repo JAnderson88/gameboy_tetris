@@ -646,7 +646,7 @@ right.addEventListener("click", e => {
   renderBoard();
 })
 a.addEventListener("click", rotatePiece)
-// b.addEventListener("click", displayTest)
+b.addEventListener("click", gravityDrop)
 
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowUp") {
