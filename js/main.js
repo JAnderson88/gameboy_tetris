@@ -9,7 +9,7 @@ const screen = document.getElementById("screen");
 const test = document.getElementById("test_display");
 
 //This is the game board that holds all the information that needed to be updated to be rendered.
-let gameBoard = {
+const gameBoard = {
   //Each row holds an array that switches its elements values between 1 and 0 so the game knows what needs to be rendered and what doesn't
   row1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   row2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -34,6 +34,37 @@ let gameBoard = {
   //This array holds all the blocks that are playable and as the input is taken they will be moved
   moveableBlock: {}
 }
+
+//Below is the resources to make the blocks a different color
+//ColorIndex sets the index in the color array
+let colorIndex = 0;
+//The color array holds all the possible colors
+const colorArray = ["cyan", "blue", "magenta", "gray", "green", "yellow", "red"]
+
+//colorBoard is similar to gameBoard and I think you can take a guess what it does if you undestand what gameBoard is for. You should by now.
+const colorBoard = {
+  row1: ["white","white","white","white","white","white","white","white","white","white"],
+  row2: ["white","white","white","white","white","white","white","white","white","white"],
+  row3: ["white","white","white","white","white","white","white","white","white","white"],
+  row4: ["white","white","white","white","white","white","white","white","white","white"],
+  row5: ["white","white","white","white","white","white","white","white","white","white"],
+  row6: ["white","white","white","white","white","white","white","white","white","white"],
+  row7: ["white","white","white","white","white","white","white","white","white","white"],
+  row8: ["white","white","white","white","white","white","white","white","white","white"],
+  row9: ["white","white","white","white","white","white","white","white","white","white"],
+  row10: ["white","white","white","white","white","white","white","white","white","white"],
+  row11: ["white","white","white","white","white","white","white","white","white","white"],
+  row12: ["white","white","white","white","white","white","white","white","white","white"],
+  row13: ["white","white","white","white","white","white","white","white","white","white"],
+  row14: ["white","white","white","white","white","white","white","white","white","white"],
+  row15: ["white","white","white","white","white","white","white","white","white","white"],
+  row16: ["white","white","white","white","white","white","white","white","white","white"],
+  row17: ["white","white","white","white","white","white","white","white","white","white"],
+  row18: ["white","white","white","white","white","white","white","white","white","white"],
+  row19: ["white","white","white","white","white","white","white","white","white","white"],
+  row20: ["white","white","white","white","white","white","white","white","white","white"]
+} 
+
 /*This object contains the context of each piece. Inside you will have the following: 
   --Block type
   --Orientation
@@ -42,9 +73,6 @@ let gameBoard = {
   --An array to understand which positions to draw
   --A check object that contains which positions to check depending on the which direction you want to move
 */
-
-let points = 0;
-
 const piece = {
   sq_block: {
     default: {
@@ -290,100 +318,23 @@ const piece = {
   }
 }
 
+let points = 0;
+
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
 function createPiece(type, orientation, startX, startY) {
-  if (type === "sq_block") {
     if (checkAvailability(startX, startY)) {
       const piece = {
         type: type,
         orientation: orientation,
         baseline: { x: startX, y: startY },
-        color: "cyan",
+        //We reference both colorArray and colorIndex to set the moveable blocks color
+        color: colorArray[colorIndex],
       };
       gameBoard.moveableBlock = Object.assign({}, piece);
       updateBoard(1);
       renderBoard();
     }
-  }
-  if (type === "i_block") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-  }
-  if (type === "t_block") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-  }
-  if (type === "s_left") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-  }
-  if (type === "s_right") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-  }
-  if (type === "l_left") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-  }
-  if (type === "l_right") {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        color: "cyan",
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
-  }
 }
 
 function movePiece(direction) {
@@ -399,6 +350,8 @@ function movePiece(direction) {
       updateBoard(1);
       removeRows();
       const { type, orientation, startX, startY } = getRandomPiece();
+      //Increment the colorIndex to change colors
+      colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
       return createPiece(type, orientation, startX, startY)
     }
     if (gameBoard.moveableBlock.baseline.y < 20) {
@@ -409,6 +362,7 @@ function movePiece(direction) {
       if (gameBoard.moveableBlock.baseline.y === 20) {
         removeRows();
         const { type, orientation, startX, startY } = getRandomPiece();
+        colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
         return createPiece(type, orientation, startX, startY)
       }
     }
@@ -442,6 +396,12 @@ function updateBoard(fill) {
   const by = gameBoard.moveableBlock.baseline.y
   piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].draw.forEach(block => {
     gameBoard[`row${by + block.y}`][bx + block.x - 1] = fill
+    if(fill === 0){
+      colorBoard[`row${by + block.y}`][bx + block.x - 1] = "white";
+    }
+    if(fill === 1){
+      colorBoard[`row${by + block.y}`][bx + block.x - 1] = gameBoard.moveableBlock.color;
+    }
   })
 }
 
@@ -454,7 +414,7 @@ function renderBoard() {
       document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid white";
       if (gameBoard[`row${i}`][j]) {
         //re-renders
-        document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = gameBoard.moveableBlock.color;
+        document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.backgroundColor = colorBoard[`row${i}`][j];
         document.querySelector(`#row${i}`).querySelectorAll(".col")[j].style.border = "1px solid black";
       }
     }
@@ -545,11 +505,8 @@ function scorePoints(line) {
 
 //This function forces the moveable blocks down to the last available blocks
 function gravityDrop() {
-  //clear the moveable Piece
   updateBoard(0);
-  //This check variable starts my while loop
   let check = false
-  //Passable checks if the moveable piece can move down similar to the moveBlock function
   let passable;
   while (!check) {
     const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check.down;
@@ -562,9 +519,9 @@ function gravityDrop() {
       renderBoard();
       removeRows();
       const { type, orientation, startX, startY } = getRandomPiece();
+      colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
       return createPiece(type, orientation, startX, startY)
     }
-    //If you can pass then move the moveable block down one and then increment the loop
     if (gameBoard.moveableBlock.baseline.y < 19) {
       gameBoard.moveableBlock.baseline.y++;
       continue;
@@ -574,14 +531,20 @@ function gravityDrop() {
       renderBoard();
       removeRows();
       const { type, orientation, startX, startY } = getRandomPiece();
+      colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
       return createPiece(type, orientation, startX, startY)
     }
   }
 }
 
+function changeColor(){
+
+}
+
 //where the game starts
 function gameStart() {
   const { type, orientation, startX, startY } = getRandomPiece();
+  colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
   createPiece(type, orientation, startX, startY)
   const render = setInterval(function () {
     movePiece("down");
