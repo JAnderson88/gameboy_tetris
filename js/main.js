@@ -7,6 +7,7 @@ const b = document.getElementById("b");
 const a = document.getElementById("a");
 const screen = document.getElementById("screen");
 const test = document.getElementById("test_display");
+const piece_cont = document.getElementById("piece_container");
 
 //This is the game board that holds all the information that needed to be updated to be rendered.
 const gameBoard = {
@@ -36,34 +37,31 @@ const gameBoard = {
 }
 
 //Below is the resources to make the blocks a different color
-//ColorIndex sets the index in the color array
 let colorIndex = 0;
-//The color array holds all the possible colors
 const colorArray = ["cyan", "blue", "magenta", "gray", "green", "yellow", "red"]
 
-//colorBoard is similar to gameBoard and I think you can take a guess what it does if you undestand what gameBoard is for. You should by now.
 const colorBoard = {
-  row1: ["white","white","white","white","white","white","white","white","white","white"],
-  row2: ["white","white","white","white","white","white","white","white","white","white"],
-  row3: ["white","white","white","white","white","white","white","white","white","white"],
-  row4: ["white","white","white","white","white","white","white","white","white","white"],
-  row5: ["white","white","white","white","white","white","white","white","white","white"],
-  row6: ["white","white","white","white","white","white","white","white","white","white"],
-  row7: ["white","white","white","white","white","white","white","white","white","white"],
-  row8: ["white","white","white","white","white","white","white","white","white","white"],
-  row9: ["white","white","white","white","white","white","white","white","white","white"],
-  row10: ["white","white","white","white","white","white","white","white","white","white"],
-  row11: ["white","white","white","white","white","white","white","white","white","white"],
-  row12: ["white","white","white","white","white","white","white","white","white","white"],
-  row13: ["white","white","white","white","white","white","white","white","white","white"],
-  row14: ["white","white","white","white","white","white","white","white","white","white"],
-  row15: ["white","white","white","white","white","white","white","white","white","white"],
-  row16: ["white","white","white","white","white","white","white","white","white","white"],
-  row17: ["white","white","white","white","white","white","white","white","white","white"],
-  row18: ["white","white","white","white","white","white","white","white","white","white"],
-  row19: ["white","white","white","white","white","white","white","white","white","white"],
-  row20: ["white","white","white","white","white","white","white","white","white","white"]
-} 
+  row1: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row2: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row3: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row4: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row5: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row6: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row7: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row8: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row9: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row10: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row11: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row12: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row13: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row14: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row15: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row16: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row17: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row18: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row19: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"],
+  row20: ["white", "white", "white", "white", "white", "white", "white", "white", "white", "white"]
+}
 
 /*This object contains the context of each piece. Inside you will have the following: 
   --Block type
@@ -319,22 +317,27 @@ const piece = {
 }
 
 let points = 0;
+let level = 1;
+let lines = 0
+let nextPiece = getRandomPiece();
 
 //define functions
 //This function creates a new Piece. Currently in this version, its just a block
 function createPiece(type, orientation, startX, startY) {
-    if (checkAvailability(startX, startY)) {
-      const piece = {
-        type: type,
-        orientation: orientation,
-        baseline: { x: startX, y: startY },
-        //We reference both colorArray and colorIndex to set the moveable blocks color
-        color: colorArray[colorIndex],
-      };
-      gameBoard.moveableBlock = Object.assign({}, piece);
-      updateBoard(1);
-      renderBoard();
-    }
+  if (checkAvailability(startX, startY)) {
+    const piece = {
+      type: type,
+      orientation: orientation,
+      baseline: { x: startX, y: startY },
+      color: colorArray[colorIndex],
+    };
+    gameBoard.moveableBlock = Object.assign({}, piece);
+    updateBoard(1);
+    renderBoard();
+    colorIndex = (colorIndex >= colorArray.length - 1) ? 0 : colorIndex + 1;
+    nextPiece = getRandomPiece();
+    updateStatus();
+  }
 }
 
 function movePiece(direction) {
@@ -349,10 +352,7 @@ function movePiece(direction) {
     if (!passable) {
       updateBoard(1);
       removeRows();
-      const { type, orientation, startX, startY } = getRandomPiece();
-      //Increment the colorIndex to change colors
-      colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
-      return createPiece(type, orientation, startX, startY)
+      return createPiece(nextPiece.type, nextPiece.orientation, nextPiece.startX, nextPiece.startY)
     }
     if (gameBoard.moveableBlock.baseline.y < 20) {
       updateBoard(0);
@@ -361,9 +361,7 @@ function movePiece(direction) {
       renderBoard();
       if (gameBoard.moveableBlock.baseline.y === 20) {
         removeRows();
-        const { type, orientation, startX, startY } = getRandomPiece();
-        colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
-        return createPiece(type, orientation, startX, startY)
+        return createPiece(nextPiece.type, nextPiece.orientation, nextPiece.startX, nextPiece.startY)
       }
     }
   }
@@ -396,10 +394,10 @@ function updateBoard(fill) {
   const by = gameBoard.moveableBlock.baseline.y
   piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].draw.forEach(block => {
     gameBoard[`row${by + block.y}`][bx + block.x - 1] = fill
-    if(fill === 0){
+    if (fill === 0) {
       colorBoard[`row${by + block.y}`][bx + block.x - 1] = "white";
     }
-    if(fill === 1){
+    if (fill === 1) {
       colorBoard[`row${by + block.y}`][bx + block.x - 1] = gameBoard.moveableBlock.color;
     }
   })
@@ -463,13 +461,13 @@ function removeRows() {
   const rows = Object.keys(gameBoard).slice(0, Object.keys(gameBoard).length - 1);
   const empty = [];
   let temp = [];
-  let lines = 0;
+  let linesCounter = 0;
   for (let i = 1; i < rows.length; i++) {
     const row = gameBoard[rows[i]].reduce((a, b) => {
       return a += b;
     });
     if (row === 10) {
-      lines++
+      linesCounter++
       for (let j = i; j > 1; j--) {
         gameBoard[rows[j]] = [].concat(temp[j - 2]);
       }
@@ -479,8 +477,9 @@ function removeRows() {
     }
     temp.push(gameBoard[rows[i]])
   }
-  scorePoints(lines);
-  console.log(points);
+  scorePoints(linesCounter);
+  lines += linesCounter;
+  updateStatus();
 }
 
 //How to score points
@@ -518,9 +517,7 @@ function gravityDrop() {
       updateBoard(1)
       renderBoard();
       removeRows();
-      const { type, orientation, startX, startY } = getRandomPiece();
-      colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
-      return createPiece(type, orientation, startX, startY)
+      return createPiece(nextPiece.type, nextPiece.orientation, nextPiece.startX, nextPiece.startY)
     }
     if (gameBoard.moveableBlock.baseline.y < 19) {
       gameBoard.moveableBlock.baseline.y++;
@@ -530,22 +527,104 @@ function gravityDrop() {
       updateBoard(1)
       renderBoard();
       removeRows();
-      const { type, orientation, startX, startY } = getRandomPiece();
-      colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
-      return createPiece(type, orientation, startX, startY)
+      return createPiece(nextPiece.type, nextPiece.orientation, nextPiece.startX, nextPiece.startY)
     }
   }
 }
 
-function changeColor(){
+//This function updates the status on the right of the gameboy screen. Shows the next block, the score, the level, and the amount of lines you've completed.
+function updateStatus() {
+  //Empty the piece container
+  piece_cont.innerHTML = ``;
+  //Grabs the first orientation of the next block. We are only going to deal with one for each type
+  const orientation = Object.keys(piece[nextPiece.type])[0];
+  //Grab the dimensions of the next piece display
+  const blockWidth = 0.8;
+  const blockHeight = 1.5;
+  //Grab the dimensions of the next piece
+  const pieceWidth = piece[nextPiece.type][orientation].width;
+  const pieceHeight = piece[nextPiece.type][orientation].height;
+  //Set the CSS of the width and the height of the piece container
+  piece_cont.style.width = `${blockWidth * pieceWidth}vw`;
+  piece_cont.style.height = `${blockHeight * pieceHeight}vh`;
+  //Use a loop to create all the available blocks to be  displayed in the next block display
+  for (let i = 1; i <= pieceWidth * pieceHeight; i++) {
+    piece_cont.innerHTML += `
+      <div class="sq_block"></div>
+    `
+  }
+  //Set the colors of the blocks that will be displayed
+  if (nextPiece.type === "sq_block") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.backgroundColor = colorArray[colorIndex];
+    squares[1].style.backgroundColor = colorArray[colorIndex];
+    squares[2].style.backgroundColor = colorArray[colorIndex];
+    squares[3].style.backgroundColor = colorArray[colorIndex];
+  }
+  if (nextPiece.type === "i_block") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.backgroundColor = colorArray[colorIndex];
+    squares[1].style.backgroundColor = colorArray[colorIndex];
+    squares[2].style.backgroundColor = colorArray[colorIndex];
+    squares[3].style.backgroundColor = colorArray[colorIndex];
+  }
+  if (nextPiece.type === "t_block") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.border = "none";
+    squares[1].style.backgroundColor = colorArray[colorIndex];
+    squares[2].style.border = "none";
+    squares[3].style.backgroundColor = colorArray[colorIndex];
+    squares[4].style.backgroundColor = colorArray[colorIndex];
+    squares[5].style.backgroundColor = colorArray[colorIndex];
+  }
+  if (nextPiece.type === "s_left") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.backgroundColor = colorArray[colorIndex];
+    squares[1].style.backgroundColor = colorArray[colorIndex];
+    squares[2].style.border = "none";
+    squares[3].style.border = "none";
+    squares[4].style.backgroundColor = colorArray[colorIndex];
+    squares[5].style.backgroundColor = colorArray[colorIndex];
+  }
+  if (nextPiece.type === "s_right") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.border = "none";
+    squares[1].style.backgroundColor = colorArray[colorIndex];
+    squares[2].style.backgroundColor = colorArray[colorIndex];
+    squares[3].style.backgroundColor = colorArray[colorIndex];
+    squares[4].style.backgroundColor = colorArray[colorIndex];
+    squares[5].style.border = "none";
+  }
+  if (nextPiece.type === "l_left") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.backgroundColor = colorArray[colorIndex];
+    squares[1].style.border = "none";
+    squares[2].style.border = "none";
+    squares[3].style.backgroundColor = colorArray[colorIndex];
+    squares[4].style.backgroundColor = colorArray[colorIndex];
+    squares[5].style.backgroundColor = colorArray[colorIndex];
+  }
+  if (nextPiece.type === "l_right") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.border = "none";
+    squares[1].style.border = "none";
+    squares[2].style.backgroundColor = colorArray[colorIndex];
+    squares[3].style.backgroundColor = colorArray[colorIndex];
+    squares[4].style.backgroundColor = colorArray[colorIndex];
+    squares[5].style.backgroundColor = colorArray[colorIndex];
+  }
+  //Display the points
+  document.getElementById("score").textContent = points;
+  //Display the level
+  document.getElementById("level").textContent = level;
+  //Display the lines
+  document.getElementById("lines").textContent = lines;
 
 }
 
 //where the game starts
 function gameStart() {
-  const { type, orientation, startX, startY } = getRandomPiece();
-  colorIndex = (colorIndex >= colorArray.length -1) ? 0 : colorIndex + 1;
-  createPiece(type, orientation, startX, startY)
+  createPiece(nextPiece.type, nextPiece.orientation, nextPiece.startX, nextPiece.startY)
   const render = setInterval(function () {
     movePiece("down");
     renderBoard();
