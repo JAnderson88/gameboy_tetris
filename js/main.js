@@ -5,9 +5,11 @@ const down = document.getElementById("down_button");
 const left = document.getElementById("left_button");
 const b = document.getElementById("b");
 const a = document.getElementById("a");
+const start = document.getElementById("start")
+const select = document.getElementById("select")
 const screen = document.getElementById("screen");
 const test = document.getElementById("test_display");
-const piece_cont = document.getElementById("piece_container");
+const pieceCont = document.getElementById("piece_container");
 
 //This is the game board that holds all the information that needed to be updated to be rendered.
 const gameBoard = {
@@ -317,9 +319,11 @@ const piece = {
 }
 
 //State variables
+let paused = false;
 let points = 0;
 let level = 1;
 let lines = 0
+
 //Grab next Piece
 let nextPiece = getRandomPiece();
 
@@ -342,6 +346,7 @@ function createPiece(type, orientation, startX, startY) {
   }
 }
 
+//movePiece into a the desired location depending on the availability of the space
 function movePiece(direction) {
   const width = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width;
   const availables = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].check[direction]
@@ -428,12 +433,15 @@ function rotatePiece() {
   index = (index >= orientations.length - 1) ? 0 : index + 1;
   const availables = piece[gameBoard.moveableBlock.type][orientations[index]].draw
   let passable;
+  updateBoard(0);
   for (let i = 0; i < availables.length; i++) {
     passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y);
     if (!passable) break;
   }
-  if (passable) { return; }
-  updateBoard(0);
+  if (!passable) { 
+    updateBoard(1);
+    return; 
+  }
   gameBoard.moveableBlock.orientation = orientations[index];
   if (gameBoard.moveableBlock.baseline.y < piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height) {
     gameBoard.moveableBlock.baseline.y = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height
@@ -445,6 +453,7 @@ function rotatePiece() {
   renderBoard();
 }
 
+//get a random piece to be played
 function getRandomPiece() {
   const types = Object.keys(piece)
   const type = Math.floor(Math.random() * types.length)
@@ -536,25 +545,23 @@ function gravityDrop() {
 
 //This function updates the status on the right of the gameboy screen. Shows the next block, the score, the level, and the amount of lines you've completed.
 function updateStatus() {
-  //Empty the piece container
-  piece_cont.innerHTML = ``;
-  //Grabs the first orientation of the next block. We are only going to deal with one for each type
+  pieceCont.innerHTML = ``;
   const orientation = Object.keys(piece[nextPiece.type])[0];
-  //Grab the dimensions of the next piece display
-  const blockWidth = 0.8;
-  const blockHeight = 1.5;
-  //Grab the dimensions of the next piece
   const pieceWidth = piece[nextPiece.type][orientation].width;
   const pieceHeight = piece[nextPiece.type][orientation].height;
-  //Set the CSS of the width and the height of the piece container
-  piece_cont.style.width = `${blockWidth * pieceWidth}vw`;
-  piece_cont.style.height = `${blockHeight * pieceHeight}vh`;
-  //Use a loop to create all the available blocks to be  displayed in the next block display
-  for (let i = 1; i <= pieceWidth * pieceHeight; i++) {
-    piece_cont.innerHTML += `
-      <div class="sq_block"></div>
-    `
+  for(var i= 1; i<= pieceHeight; i++){
+    pieceCont.innerHTML += `<div class="row"></div>`
+    for(var j=1; j<=pieceWidth; j++){
+      pieceCont.querySelectorAll(".row")[i-1].innerHTML += `<div class="sq_block"></div>`
+    }
   }
+  const blockWidth = document.querySelector('.sq_block').offsetWidth;
+  const blockHeight = document.querySelector('.sq_block').offsetHeight;
+  pieceCont.style.minWidth = `${(blockWidth * pieceWidth)}px`;
+  pieceCont.style.maxWidth = `${(blockWidth * pieceWidth)}px`;
+  pieceCont.style.minHeight = `${(blockHeight * pieceHeight)}px`;
+  pieceCont.style.maxHeight = `${(blockHeight * pieceHeight)}px`;
+
   //Set the colors of the blocks that will be displayed
   if (nextPiece.type === "sq_block") {
     const squares = document.querySelectorAll(".sq_block");
@@ -572,44 +579,44 @@ function updateStatus() {
   }
   if (nextPiece.type === "t_block") {
     const squares = document.querySelectorAll(".sq_block");
-    squares[0].style.border = "none";
+    squares[0].style.border = "1px solid hsl(55, 86%, 83%)";
     squares[1].style.backgroundColor = colorArray[colorIndex];
-    squares[2].style.border = "none";
+    squares[2].style.border = "1px solid hsl(55, 86%, 83%)";
     squares[3].style.backgroundColor = colorArray[colorIndex];
-    squares[4].style.backgroundColor = colorArray[colorIndex];
-    squares[5].style.backgroundColor = colorArray[colorIndex];
-  }
-  if (nextPiece.type === "s_left") {
-    const squares = document.querySelectorAll(".sq_block");
-    squares[0].style.backgroundColor = colorArray[colorIndex];
-    squares[1].style.backgroundColor = colorArray[colorIndex];
-    squares[2].style.border = "none";
-    squares[3].style.border = "none";
     squares[4].style.backgroundColor = colorArray[colorIndex];
     squares[5].style.backgroundColor = colorArray[colorIndex];
   }
   if (nextPiece.type === "s_right") {
     const squares = document.querySelectorAll(".sq_block");
-    squares[0].style.border = "none";
+    squares[0].style.backgroundColor = colorArray[colorIndex];
+    squares[1].style.backgroundColor = colorArray[colorIndex];
+    squares[2].style.border = "1px solid hsl(55, 86%, 83%)";
+    squares[3].style.border = "1px solid hsl(55, 86%, 83%)";
+    squares[4].style.backgroundColor = colorArray[colorIndex];
+    squares[5].style.backgroundColor = colorArray[colorIndex];
+  }
+  if (nextPiece.type === "s_left") {
+    const squares = document.querySelectorAll(".sq_block");
+    squares[0].style.border = "1px solid hsl(55, 86%, 83%)";
     squares[1].style.backgroundColor = colorArray[colorIndex];
     squares[2].style.backgroundColor = colorArray[colorIndex];
     squares[3].style.backgroundColor = colorArray[colorIndex];
     squares[4].style.backgroundColor = colorArray[colorIndex];
-    squares[5].style.border = "none";
+    squares[5].style.border = "1px solid hsl(55, 86%, 83%)";
   }
   if (nextPiece.type === "l_left") {
     const squares = document.querySelectorAll(".sq_block");
     squares[0].style.backgroundColor = colorArray[colorIndex];
-    squares[1].style.border = "none";
-    squares[2].style.border = "none";
+    squares[1].style.border = "1px solid hsl(55, 86%, 83%)";
+    squares[2].style.border = "1px solid hsl(55, 86%, 83%)";
     squares[3].style.backgroundColor = colorArray[colorIndex];
     squares[4].style.backgroundColor = colorArray[colorIndex];
     squares[5].style.backgroundColor = colorArray[colorIndex];
   }
   if (nextPiece.type === "l_right") {
     const squares = document.querySelectorAll(".sq_block");
-    squares[0].style.border = "none";
-    squares[1].style.border = "none";
+    squares[0].style.border = "1px solid hsl(55, 86%, 83%)";
+    squares[1].style.border = "1px solid hsl(55, 86%, 83%)";
     squares[2].style.backgroundColor = colorArray[colorIndex];
     squares[3].style.backgroundColor = colorArray[colorIndex];
     squares[4].style.backgroundColor = colorArray[colorIndex];
@@ -631,6 +638,14 @@ function gameStart() {
     movePiece("down");
     renderBoard();
   }, 1200)
+  return render;
+}
+
+function pause(pause){
+  return (pause) ?  clearInterval(game) : render = setInterval(function(){
+    movePiece("down");
+    renderBoard();
+  }, 1200);
 }
 
 //addEventlisteners and call functions
@@ -649,6 +664,9 @@ right.addEventListener("click", e => {
 })
 a.addEventListener("click", rotatePiece)
 b.addEventListener("click", gravityDrop)
+start.addEventListener("click", () => {
+  game = pause(paused = !paused);
+})
 
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowUp") {
@@ -672,4 +690,4 @@ document.addEventListener("keydown", e => {
   renderBoard();
 })
 //Start the game
-gameStart();
+let game = gameStart();

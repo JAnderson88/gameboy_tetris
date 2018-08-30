@@ -1,10 +1,10 @@
 :root{
-  --gameboy-width: 30vw;
-  --gameboy-height: 90vh;
-  --gameboy-top_half_height: calc(var(--gameboy-height) - 36vh); /*90vh -36vh = 54vh */
-  --gameboy-bottom_half: calc(var(--gameboy-height) - var(--gameboy-top_half_height)); /* 90vh - 54vh = 36vh */
+  --gameboy-width: 30vw; /* 365px */
+  --gameboy-height: 90vh; /* 400px */
+  --gameboy-top_half_height: calc(var(--gameboy-height) - 36vh); /*90vh -36vh = 54vh ___ 444px -159px = 285px */
+  --gameboy-bottom_half: calc(var(--gameboy-height) - var(--gameboy-top_half_height)); /* 90vh - 54vh = 36vh ____ 444px - 285px = 159px*/
   --gameboy-screen_width_margin: 4vw;
-  --gameboy-screen_width: calc(var(--gameboy-width) - var(--gameboy-screen_width_margin)); /* 30vw - 4vw = 26vw */
+  --gameboy-screen_width: calc(var(--gameboy-width) - var(--gameboy-screen_width_margin)); /* 30vw - 4vw = 26vw ____ */
   --gameboy-screen_height_margin: 9vh;
   --gameboy-screen_height: calc(var(--gameboy-top_half_height) - var(--gameboy-screen_height_margin)); /*54vh - 9vh = 45vh */
   --gameboy-d_pad_height_offset: 17vh;
@@ -20,17 +20,17 @@
   --gameboy-d_pad_col_height_offset: 4vh;
   --gameboy-d_pad_col_height: calc(var(--gameboy-d_pad_height) - var(--gameboy-d_pad_col_height_offset)); /* 19vh - 4vh = 15vh */
   --gameboy-d_pad_col_width_offset: 8vw;
-  --gameboy-d_pad_col_width: calc(var(--gameboy-d_pad_width) - var(--gameboy-d_pad_col_width_offset)); /* 10vw - 8vw = 2vw  */
+  --gameboy-d_pad_col_width: calc(va(--gameboy-d_pad_width) - var(--gameboy-d_pad_col_width_offset)); /* 10vw - 8vw = 2vw  */
   --gameboy-d_pad_col_top_offset: -1.65vh;
-  --gameboy-d_pad_col_left_offset: 6vw; 
+  --gameboy-d_pad_col_left_offset: 3.65vw; 
   --gameboy-d_pad_col_left: calc(var(--gameboy-d_pad_width) - var(--gameboy-d_pad_col_left_offset)); /* 10vw - 6vw = 4vw */
   --gameboy-button_dir_size: 0.9;
   --gameboy-buttons_height_offset: 25vh;
   --gameboy-buttons_height: calc(var(--gameboy-bottom_half) - var(--gameboy-buttons_height_offset)); /* 36vh - 25vh = 11vh */
   --gameboy-buttons_width_offset: 20vw;
   --gameboy-buttons_width: calc(var(--gameboy-width) - var(--gameboy-buttons_width_offset)); /* 30vw - 20vw = 10vw */
-  --gameboy-b_button_offsetY : 2vh;
-  --gameboy-a_button_offsetY : -2vh;
+  --gameboy-b_button_offsetY : 8vh;
+  --gameboy-a_button_offsetY : 2vh;
   --screen-sides_margin: 5px solid hsl(55, 86%, 83%);
   --screen-background_color: #db6300;
   --screen-next_block_top: 6vh;
@@ -39,6 +39,128 @@
   --screen-info_display_height: 5vh;
   --screen-info_display_font_size: 10px;
   --screen-info_main_border: 23px solid black
+}
+
+@media screen and (max-width: 414px){
+  :root{
+    --gameboy-width: 94vw; /* 365px */
+    --gameboy-height: 95vh; /* 400px */
+    --gameboy-d_pad_width_offset: 68vw;  
+    --gameboy-d_pad_width: calc(var(--gameboy-width) - var(--gameboy-d_pad_width_offset)); /*30vw - 20vw = 10vw */
+    --gameboy-d_pad_col_left_offset: 5.65vw; 
+    --gameboy-d_pad_col_left: calc(var(--gameboy-d_pad_width) - var(--gameboy-d_pad_col_left_offset)); /* 10vw - 6vw = 4vw */
+  }
+  body{
+    margin: 2vh auto 0vh auto !important;
+  }
+
+  #piece_container .sq_block{
+    margin: 0;
+    padding: 0;
+    width: 2.4vw !important;
+    height: 1.4vh !important;
+  }
+
+  .d_pad .col {
+    max-width: 6.5vw !important;
+    left: var(--gameboy-d_pad_col_left) !important;
+  }
+
+  .buttons #b{
+    min-width: 10vw !important;
+    max-width: 10vw !important;
+    transform: translateY(var(--gameboy-b_button_offsetY)) translateX(12vw) !important;
+  }
+  
+  .buttons #a{
+    min-width: 10vw !important;
+    max-width: 10vw !important;
+    transform: translateY(var(--gameboy-a_button_offsetY)) translateX(12vw) !important;
+  }
+  
+  .ss_cont .diag_buttons{
+    min-width: 2.8vw !important;
+    margin: 0vh 5vw 0vh 5vw !important;
+  }
+}
+@media screen and (min-width: 415px) and (max-width: 768px){
+  :root{
+    --gameboy-width: 94vw; /* 365px */
+    --gameboy-height: 95vh; /* 400px */
+    --gameboy-d_pad_width_offset: 68vw;  
+    --gameboy-d_pad_width: calc(var(--gameboy-width) - var(--gameboy-d_pad_width_offset)); /*30vw - 20vw = 10vw */
+    --gameboy-d_pad_col_left_offset: 5.65vw; 
+    --gameboy-d_pad_col_left: calc(var(--gameboy-d_pad_width) - var(--gameboy-d_pad_col_left_offset)); /* 10vw - 6vw = 4vw */
+    --screen-info_display_font_size: 20px;
+  }
+
+  #piece_container .sq_block{
+    margin: 0;
+    padding: 0;
+    width: 2.4vw !important;
+    height: 1.4vh !important;
+  }
+
+  .d_pad .col {
+    max-width: 6.5vw !important;
+    left: var(--gameboy-d_pad_col_left) !important;
+  }
+
+  .buttons #b{
+    min-width: 10vw !important;
+    max-width: 10vw !important;
+    transform: translateY(var(--gameboy-b_button_offsetY)) translateX(12vw) !important;
+  }
+  
+  .buttons #a{
+    min-width: 10vw !important;
+    max-width: 10vw !important;
+    transform: translateY(var(--gameboy-a_button_offsetY)) translateX(12vw) !important;
+  }
+
+  .ss_cont .diag_buttons{
+    min-width: 2.3vw !important;
+    margin: 0vh 5vw 0vh 5vw !important;
+  }
+}
+@media screen and (min-device-width: 769px) and (max-device-width: 1024px){
+  :root{
+    --gameboy-width: 94vw; /* 365px */
+    --gameboy-height: 95vh; /* 400px */
+    --gameboy-d_pad_width_offset: 68vw;  
+    --gameboy-d_pad_width: calc(var(--gameboy-width) - var(--gameboy-d_pad_width_offset)); /*30vw - 20vw = 10vw */
+    --gameboy-d_pad_col_left_offset: 5.65vw; 
+    --gameboy-d_pad_col_left: calc(var(--gameboy-d_pad_width) - var(--gameboy-d_pad_col_left_offset)); /* 10vw - 6vw = 4vw */
+    --screen-info_display_font_size: 20px;
+  }
+
+  #piece_container .sq_block{
+    margin: 0;
+    padding: 0;
+    width: 2.4vw !important;
+    height: 1.4vh !important;
+  }
+
+  .d_pad .col {
+    max-width: 6.5vw !important;
+    left: var(--gameboy-d_pad_col_left) !important;
+  }
+
+  .buttons #b{
+    min-width: 10vw !important;
+    max-width: 10vw !important;
+    transform: translateY(var(--gameboy-b_button_offsetY)) translateX(12vw) !important;
+  }
+  
+  .buttons #a{
+    min-width: 10vw !important;
+    max-width: 10vw !important;
+    transform: translateY(var(--gameboy-a_button_offsetY)) translateX(12vw) !important;
+  }
+  .ss_cont .diag_buttons{
+    min-width: 2.3vw !important;
+    margin: 0vh 5vw 0vh 5vw !important;
+  }
 }
 
 body{
@@ -58,7 +180,9 @@ body{
 .gameboy{
   border: 1px solid black;
   min-height: var(--gameboy-height);
+  max-height: var(--gameboy-height);
   min-width: var(--gameboy-width);
+  max-width: var(--gameboy-width);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -69,17 +193,18 @@ body{
   justify-content: center;
   align-items: center;
   min-width: inherit;
+  max-width: inherit;
   min-height: var(--gameboy-top_half_height);
+  max-height: var(--gameboy-top_half_height);
 }
 
 .top_half #screen{
   border: 1px solid black;
   min-width: var(--gameboy-screen_width);
+  max-width: var(--gameboy-screen_width);
   min-height: var(--gameboy-screen_height);
+  max-height: var(--gameboy-screen_height);
   display: flex;
-  /* This is for test_display */
-  /* justify-content: center; */
-  /* align-items: center; */
   flex-direction: row;
   align-items: stretch;
 }
@@ -100,13 +225,11 @@ body{
 }
 
 .main .row{
-  /* border-bottom: 1px solid black; */
   flex: 1;
   display: flex;
 }
 
 .main .row .col{
-  /* border-right: 1px solid black; */
   flex: 1;
 }
 
@@ -131,17 +254,22 @@ body{
 }
 
 .next_block #piece_container{
-  max-width: auto;
-  max-height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+#piece_container .row{
   display: flex;
-  flex-wrap: wrap;
+  flex:1;
   flex-direction: row;
+  justify-content: flex-start;
 }
 
 #piece_container .sq_block{
   border: 1px solid black;
-  min-width: 0.5vw;
-  min-height: 1.1vh;
+  margin: 0;
+  min-width: 0.58vw;
+  min-height: 1.01vh;
 }
 
 .right_margin .disp{
@@ -178,14 +306,26 @@ body{
   min-width: inherit;
   min-height: var(--gameboy-bottom_half);
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
+  flex-direction: column;
 }
-/* Directional Pad */
-.bottom_half .d_pad{
-  min-height: var(--gameboy-d_pad_height);
-  min-width: var(--gameboy-d_pad_width);
+
+.bottom_half .button_cont{
+  min-width: inherit;
+  min-height: 20vh;
+  transform: translateY(-2vh);
+  display: flex;
+  flex-direction: row;
+}
+
+.button_cont .d_pad{
+  flex:1;
+}
+
+.button_cont .buttons{
+  flex:1;
+  display: flex;
+  flex-direction: row;
+
 }
 
 .d_pad .row{
@@ -197,6 +337,7 @@ body{
   left: 0vw;
   display: flex;
   flex-direction: row;
+  z-index: 2;
 }
 
 .d_pad #left_button{
@@ -209,7 +350,7 @@ body{
   background-color: white;
   min-width: 23%;
   transform: scale(1.5);
-  border-radius: 22px;
+  border-radius: 50%;
   z-index: 1;
 }
 
@@ -223,7 +364,7 @@ body{
   display: inline-block;
   min-height: var(--gameboy-d_pad_col_height);
   min-width: var(--gameboy-d_pad_col_width);
-  max-width: var(--gameboy-d_pad_col_width);
+  max-width: 2vw;
   top: var(--gameboy-d_pad_col_top_offset);
   left: var(--gameboy-d_pad_col_left);
   display: flex;
@@ -241,48 +382,45 @@ body{
   flex: var(--gameboy-button_dir_size);
   margin-top: 0vh;
 }
-/* B and A Buttons */
-.bottom_half .buttons{
-  position: relative;
-  display: inline-block;
-  min-height: var(--gameboy-buttons_height);
-  min-width: var(--gameboy-buttons_width);
-  max-width: var(--gameboy-buttons_width);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
 
 .buttons #b{
   border: 1px solid black;
   margin: 2vh 1vw 2vh 1vw;
+  min-height: 3vh;
+  max-height: 7vh;
+  min-width: 3vw;
+  max-width: 5vw;
   border-radius: 50%;
-  flex: 1;
-  transform: translateY(var(--gameboy-b_button_offsetY));
+  transform: translateY(var(--gameboy-b_button_offsetY)) translateX(2vw);
 }
 
 .buttons #a{
   border: 1px solid black;
   margin: 2vh 1vw 2vh 1vw;
   border-radius: 50%;
-  flex: 1;
-  transform: translateY(var(--gameboy-a_button_offsetY));
+  min-height: 3vh;
+  max-height: 7vh;
+  min-width: 3vw;
+  max-width: 5vw;
+  transform: translateY(var(--gameboy-a_button_offsetY)) translateX(2vw);
 }
 
-@media screen and (max-width: 1024px){
-  .gameboy{
-    border: 1px solid black;
-    min-height: 90vh;
-    min-width: 74vw;
-    border-radius: 15px;
-  }
+.bottom_half .ss_cont{
+  min-width: inherit;
+  min-height: 8vh;
+  transform: translateY(-2vh);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-@media screen and (max-width: 414px) and (min-width: 1023px){
-  .gameboy{
-    border: 1px solid black;
-    min-height: 90vh;
-    min-width: 99vw;
-    border-radius: 15px;
-  }
+.ss_cont .diag_buttons{
+  border: 1px solid black;
+  min-width: 0.8vw;
+  margin: 0vh 2vw 0vh 2vw;
+  min-height: inherit;
+  transform: translateX(-1.5vw) rotate(65deg);
+  border-radius: 50%;
+
 }
