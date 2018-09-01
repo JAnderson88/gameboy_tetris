@@ -44,7 +44,7 @@
 @media screen and (max-width: 414px){
   :root{
     --gameboy-width: 94vw; /* 365px */
-    --gameboy-height: 95vh; /* 400px */
+    --gameboy-height: 85vh; /* 400px */
     --gameboy-d_pad_width_offset: 68vw;  
     --gameboy-d_pad_width: calc(var(--gameboy-width) - var(--gameboy-d_pad_width_offset)); /*30vw - 20vw = 10vw */
     --gameboy-d_pad_col_left_offset: 5.65vw; 
