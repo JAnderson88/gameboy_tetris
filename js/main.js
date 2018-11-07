@@ -328,6 +328,11 @@ let lines = 0
 let nextPiece = getRandomPiece();
 
 //define functions
+//Checks if a space is available
+function checkAvailability(x, y) {
+  return (gameBoard[`row${y}`][x - 1] === 1) ? false : true;
+}
+
 //This function creates a new Piece. Currently in this version, its just a block
 function createPiece(type, orientation, startX, startY) {
   if (checkAvailability(startX, startY)) {
@@ -390,11 +395,6 @@ function movePiece(direction) {
   }
 }
 
-//Checks if a space is available
-function checkAvailability(x, y) {
-  return (gameBoard[`row${y}`][x - 1] === 1) ? false : true;
-}
-
 //updates block to new position
 function updateBoard(fill) {
   const bx = gameBoard.moveableBlock.baseline.x
@@ -438,16 +438,20 @@ function rotatePiece() {
     passable = checkAvailability(gameBoard.moveableBlock.baseline.x + availables[i].x, gameBoard.moveableBlock.baseline.y + availables[i].y);
     if (!passable) break;
   }
-  if (!passable) { 
+  if (!passable) {
     updateBoard(1);
-    return; 
+    return;
   }
   gameBoard.moveableBlock.orientation = orientations[index];
   if (gameBoard.moveableBlock.baseline.y < piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height) {
     gameBoard.moveableBlock.baseline.y = piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].height
   }
   if (gameBoard.moveableBlock.baseline.x + piece[gameBoard.moveableBlock.type][gameBoard.moveableBlock.orientation].width > 10) {
-    gameBoard.moveableBlock.baseline.x--;
+    if(gameBoard.moveableBlock.type === "i_block" && gameBoard.moveableBlock.orientation === "long"){
+      gameBoard.moveableBlock.baseline.x = 7;
+    } else {
+      gameBoard.moveableBlock.baseline.x--;
+    }
   }
   updateBoard(1);
   renderBoard();
@@ -549,10 +553,10 @@ function updateStatus() {
   const orientation = Object.keys(piece[nextPiece.type])[0];
   const pieceWidth = piece[nextPiece.type][orientation].width;
   const pieceHeight = piece[nextPiece.type][orientation].height;
-  for(var i= 1; i<= pieceHeight; i++){
+  for (var i = 1; i <= pieceHeight; i++) {
     pieceCont.innerHTML += `<div class="row"></div>`
-    for(var j=1; j<=pieceWidth; j++){
-      pieceCont.querySelectorAll(".row")[i-1].innerHTML += `<div class="sq_block"></div>`
+    for (var j = 1; j <= pieceWidth; j++) {
+      pieceCont.querySelectorAll(".row")[i - 1].innerHTML += `<div class="sq_block"></div>`
     }
   }
   const blockWidth = document.querySelector('.sq_block').offsetWidth;
@@ -641,8 +645,8 @@ function gameStart() {
   return render;
 }
 
-function pause(pause){
-  return (pause) ?  clearInterval(game) : render = setInterval(function(){
+function pause(pause) {
+  return (pause) ? clearInterval(game) : render = setInterval(function () {
     movePiece("down");
     renderBoard();
   }, 1200);
